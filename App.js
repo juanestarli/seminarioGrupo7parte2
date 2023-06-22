@@ -52,10 +52,10 @@ function BottomTabsRoot({ navigation }) {
           <View
             style={{
               width: 390,
-              flexDirection: "column",
+              flexDirection: "row",
               alignItems: "center",
-              justifyContent: "center",
-              height: 56,
+              justifyContent: "space-evenly",
+              height: 80,
             }}
           >
             {bottomTabItemsNormal.map((item, index) => {
