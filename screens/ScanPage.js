@@ -20,6 +20,12 @@ const ScanPage = () => {
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off) //Desactivamos el flash
   const cameraRef = useRef(null);
 
+  //Variable producto
+  const [imgUrl, setImgUrl] = useState('');
+  const [nombre, setNombre] = useState('');
+
+  
+
 
   useEffect(() => {
     (async () =>{
@@ -44,9 +50,18 @@ const ScanPage = () => {
     const response = await fetch(`https://world.openfoodfacts.org/api/v0/product/${data}.json`)
     const json = await response.json();
     const productName=json.product.product_name;
-    console.log(productName)
+    const imagenUrl = json.product.image_url;
+    setNombre(productName);
+    setImgUrl(imagenUrl);
+    console.log(productName);
+    console.log(imagenUrl);
     await AsyncStorage.setItem('nombreProducto', productName);
     const nombreProducto= await AsyncStorage.getItem('nombreProducto');
+    const dataParaApto = {
+      nombre : productName,
+      imgUrl : imagenUrl,
+    };
+    navigation.navigate("ProductDataPageAPTO", {dataParaApto})
   }
 
   const validarProducto = async (data) => {

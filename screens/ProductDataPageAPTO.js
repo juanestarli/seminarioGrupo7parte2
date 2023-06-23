@@ -9,34 +9,16 @@ import {
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { Padding, FontFamily, FontSize, Color, Border } from "../GlobalStyles";
+import { useRoute } from '@react-navigation/native';
 
 const ProductDataPageAPTO = () => {
   const navigation = useNavigation();
 
+  const route = useRoute();
+  const { dataParaApto } = route.params;
+
   return (
     <View style={styles.productDataPageApto}>
-      <View style={[styles.sistemaBarraArriba, styles.capIconPosition]}>
-        <Text style={[styles.time, styles.timeFlexBox]}>9:41</Text>
-        <View style={styles.battery}>
-          <View style={styles.border} />
-          <Image
-            style={[styles.capIcon, styles.capIconPosition]}
-            contentFit="cover"
-            source={require("../assets/cap.png")}
-          />
-          <View style={styles.capacity} />
-        </View>
-        <Image
-          style={styles.wifiIcon}
-          contentFit="cover"
-          source={require("../assets/wifi.png")}
-        />
-        <Image
-          style={styles.cellularConnectionIcon}
-          contentFit="cover"
-          source={require("../assets/cellular-connection.png")}
-        />
-      </View>
       <View style={[styles.aptoParaSuConsumoWrapper, styles.wrapperSpaceBlock]}>
         <Text style={[styles.aptoParaSu, styles.aptoParaSuTypo]}>{`APTO PARA SU
 CONSUMO`}</Text>
@@ -92,10 +74,10 @@ CONSUMO`}</Text>
         <Image
           style={[styles.image5Icon, styles.image5IconLayout]}
           contentFit="cover"
-          source={require("../assets/image-5.png")}
+          source={{uri : dataParaApto.imgUrl}}
         />
         <Text style={[styles.milanesaDeSoja, styles.milanesaDeSojaTypo]}>
-          NOMBRE DEL PRODUCTO
+          {dataParaApto.nombre}
         </Text>
       </Pressable>
       <ImageBackground
@@ -224,7 +206,6 @@ const styles = StyleSheet.create({
   },
   noEstDeAcuerdo: {
     fontSize: FontSize.size_sm,
-    textDecoration: "underline",
     color: Color.black,
   },
   noEstDeContainer: {

@@ -19,21 +19,23 @@ const ProductSearchPage = () => {
   const [imgUrl, setImgUrl] = useState('');
   const [img, setImg] = useState('');
   const [nombre, setNombre] = useState('');
+  const [productos, setProductos] = useState([]);
 
   const [codigo, setCodigo] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (text) => {
-    const apiUrl = `https://world.openfoodfacts.org/api/v0/product/${text}`;
-
+    const apiUrl = `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${text}&search_simple=1&json=1`;
+    
     axios.get(apiUrl)
     .then(response => {
       // Procesar la respuesta de la API
       const data = response.data;
-      if (data.status != 0 && data.product.product_name != null){
-        setNombre(data.product.product_name + " - " + data.product.brands);
-        setImgUrl(data.product.image_url);
+      if (data.count != 0){
+        //setNombre(data.product.product_name + " - " + data.product.brands);
+        //setImgUrl(data.product.image_url);
         setIsLoading(true);
+        setProductos(data.products)
       } else {
         setIsLoading(false);
       }
@@ -65,24 +67,39 @@ const ProductSearchPage = () => {
       />
       <ScrollView
         style={styles.tarjetaParent}
-        showsHorizontalScrollIndicator={false}
+        showsHorizontalScrollIndicator={true}
         contentContainerStyle={styles.frameScrollViewContent}
       >
-        {isLoading && nombre != null ? (
+
+        {isLoading && productos != null ? (
+
+            productos.map(producto =>
+
             <Pressable
-            style={styles.tarjetaShadowBox}
-            onPress={() => navigation.navigate("Nutriscore", {dataParaNutriscore})}
-          >
+            key={producto.key}
+              style={styles.tarjetaShadowBox}
+              onPress={() => navigation.navigate("Nutriscore", {dataParaNutriscore})}
+            >
+
             <View style={[styles.tarjetaChild, styles.image5IconLayout]} />
-            {imgUrl ? (
-              <Image source={{ uri: imgUrl }} style={[styles.image5Icon, styles.image5IconLayout]} contentFit="cover" />
-            ) : (
-              <></>
+            {producto.image_url ? (
+                <Image source={{ uri: producto.image_url }} style={[styles.image5Icon, styles.image5IconLayout]} contentFit="cover" />
+              ) : (
+                <></>
             )}
-            <Text style={[styles.milanesaDeSoja, styles.timeClr]}>
-              {nombre}
-            </Text>
-          </Pressable>
+
+            {producto.product_name ? (
+                <Text style={[styles.milanesaDeSoja, styles.timeClr]}>
+                  {producto.product_name}
+                </Text>
+              ) : (
+                <></>
+            )}
+
+            </Pressable>
+
+            )
+
         ) : null}
         
       </ScrollView>
@@ -284,7 +301,6 @@ const styles = StyleSheet.create({
   tarjetaParent: {
     top: 228,
     left: 28,
-    position: "absolute",
     flex: 1,
   },
   productSearchPageChild: {
