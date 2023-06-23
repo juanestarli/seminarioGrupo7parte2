@@ -206,6 +206,7 @@ const styles = StyleSheet.create({
   },
   noEstDeAcuerdo: {
     fontSize: FontSize.size_sm,
+    textDecorationLine: 'underline',
     color: Color.black,
   },
   noEstDeContainer: {

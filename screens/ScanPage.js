@@ -20,10 +20,6 @@ const ScanPage = () => {
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off) //Desactivamos el flash
   const cameraRef = useRef(null);
 
-  //Variable producto
-  const [imgUrl, setImgUrl] = useState('');
-  const [nombre, setNombre] = useState('');
-
   
 
 
@@ -49,19 +45,32 @@ const ScanPage = () => {
   const getNameProduct = async (data) => {
     const response = await fetch(`https://world.openfoodfacts.org/api/v0/product/${data}.json`)
     const json = await response.json();
-    const productName=json.product.product_name;
-    const imagenUrl = json.product.image_url;
-    setNombre(productName);
-    setImgUrl(imagenUrl);
-    console.log(productName);
-    console.log(imagenUrl);
-    await AsyncStorage.setItem('nombreProducto', productName);
-    const nombreProducto= await AsyncStorage.getItem('nombreProducto');
-    const dataParaApto = {
-      nombre : productName,
-      imgUrl : imagenUrl,
-    };
-    navigation.navigate("ProductDataPageAPTO", {dataParaApto})
+    setScanData(null);
+
+    // Chequeo si encontró el producto
+
+    if (json.status == 0){
+
+      navigation.navigate("ProductDataPageNOSEENCUEN");
+
+    } else {
+
+      // Nombre y Imágen
+      const productName=json.product.product_name;
+      const imagenUrl = json.product.image_url;
+
+      await AsyncStorage.setItem('nombreProducto', productName);
+      const nombreProducto= await AsyncStorage.getItem('nombreProducto');
+
+      // Armo un JSON y lo mando a APTO
+      const dataParaApto = {
+        nombre : productName,
+        imgUrl : imagenUrl,
+      };
+
+      navigation.navigate("ProductDataPageAPTO", {dataParaApto})
+
+    }
   }
 
   const validarProducto = async (data) => {
@@ -84,15 +93,10 @@ const ScanPage = () => {
         onBarCodeScanned={scanData ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />}
-      {scanData && <Button 
-                    color= {"#F17F16"}
-                    title={'Escanear otra vez'} 
-                    onPress={() => setScanData(undefined)}
-                    />  
-      }
    </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

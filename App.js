@@ -196,6 +196,11 @@ const App = () => {
               component={ScanPage2}
               options={{ headerShown: false }}
             />
+            <Stack.Screen
+              name="ProductDataPageNOSEENCUEN"
+              component={ProductDataPageNOSEENCUEN}
+              options={{ headerShown: false }}
+            />
           </Stack.Navigator>
         ) : (
           <SplashPage />

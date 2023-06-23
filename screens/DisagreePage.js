@@ -1,40 +1,28 @@
 import * as React from "react";
-import { Text, StyleSheet, View, TextInput, Pressable } from "react-native";
+import { Text, StyleSheet, View, TextInput, Pressable, Alert } from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { Color, Padding, FontSize, FontFamily, Border } from "../GlobalStyles";
+import { useState, useEffect, useRef } from 'react';
 
 const DisagreePage = () => {
   const navigation = useNavigation();
 
+  this.myTextInput = React.createRef();
+
+  function pressEnviar() {
+    this.myTextInput.current.clear(); 
+    this.myTextInput.current.blur();
+  }
+
   return (
     <View style={styles.disagreePage}>
-      <View style={styles.sistemaBarraArriba}>
-        <Text style={styles.time}>9:41</Text>
-        <View style={[styles.battery, styles.borderPosition]}>
-          <View style={[styles.border, styles.borderPosition]} />
-          <Image
-            style={[styles.capIcon, styles.borderPosition]}
-            contentFit="cover"
-            source={require("../assets/cap.png")}
-          />
-          <View style={[styles.capacity, styles.borderPosition]} />
-        </View>
-        <Image
-          style={styles.wifiIcon}
-          contentFit="cover"
-          source={require("../assets/wifi.png")}
-        />
-        <Image
-          style={styles.cellularConnectionIcon}
-          contentFit="cover"
-          source={require("../assets/cellular-connection.png")}
-        />
-      </View>
+      
       <Text style={[styles.noEstDe, styles.aFlexBox]}>
         ¿NO ESTÁ DE ACUERDO? CUÉNTANOS POR QUÉ
       </Text>
       <TextInput
+        ref={this.myTextInput}
         style={[styles.frameBusqueda, styles.frameBusquedaSpaceBlock]}
         placeholder="Escribe la razón aquí..."
         keyboardType="default"
@@ -43,7 +31,7 @@ const DisagreePage = () => {
       <Pressable
         style={[styles.botonEnviarFeedback, styles.frameBusquedaSpaceBlock]}
         onPress={() =>
-          navigation.navigate("BottomTabsRoot", { screen: "HomePage" })
+          pressEnviar()
         }
       >
         <Text style={[styles.a, styles.aFlexBox]}>ENVIAR</Text>
