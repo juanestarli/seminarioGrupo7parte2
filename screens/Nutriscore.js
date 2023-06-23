@@ -15,20 +15,28 @@ const Nutriscore = () => {
   const navigation = useNavigation();
 
   const route = useRoute();
-  const { dataParaNutriscore } = route.params;
+  const { dataParaApto } = route.params;
+  
+  const nutriscoreImages = {
+    a: require('../assets/nutriscore-a.png'),
+    b: require('../assets/nutriscore-b.png'),
+    c: require('../assets/nutriscore-c.png'),
+    d: require('../assets/nutriscore-d.png'),
+    e: require('../assets/nutriscore-e.png')
+  };
 
   return (
     <View style={styles.nutriscore}>
       <View style={styles.tarjeta}>
         <View style={[styles.tarjetaChild, styles.iconLayout]} />
         <Text style={[styles.milanesaDeSoja, styles.milanesaDeSojaTypo]}>
-          {dataParaNutriscore.nombre}
+          {dataParaApto.nombre}
         </Text>
       </View>
       <Image
         style={[styles.image10Icon, styles.iconLayout]}
         contentFit="cover"
-        source={{uri : dataParaNutriscore.imgUrl}}
+        source={{uri : dataParaApto.imgUrl}}
       />
       <Pressable
         style={styles.wrapper}
@@ -47,11 +55,16 @@ const Nutriscore = () => {
         resizeMode="cover"
         source={require("../assets/imagennutriscore.png")}
       />
-      <ImageBackground
+      
+      {dataParaApto.nutriscore ? (
+        <ImageBackground
         style={styles.image14Icon}
         resizeMode="cover"
-        source={require("../assets/image14.png")}
-      />
+        source={nutriscoreImages[dataParaApto.nutriscore]}
+      />        ) : (
+          <></>
+      )}
+      
       <Text
         style={[
           styles.aspectosPositivosRaznContainer,
@@ -265,8 +278,8 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   wrapper: {
-    left: 17,
-    top: 62,
+    left: 33,
+    top: 67,
     width: 68,
     height: 68,
     position: "absolute",

@@ -1,89 +1,79 @@
 import React, { useState } from "react";
 import { Image } from "expo-image";
-import {
-  StyleSheet,
-  Text,
-  Switch,
-  TextInput,
-  View,
-  Pressable,
-} from "react-native";
+import {StyleSheet,Text,  Switch,  TextInput,  View,  Pressable,} from "react-native";
 import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 
 const RestrictionsPage = () => {
-  const [seleccinPositivaValue, setSeleccinPositivaValue] = useState(false);
-  const [seleccinNegativaValue, setSeleccinNegativaValue] = useState(false);
-  const [seleccinNegativa1Value, setSeleccinNegativa1Value] = useState(false);
-  const [seleccinNegativa2Value, setSeleccinNegativa2Value] = useState(false);
-  const [seleccinNegativa3Value, setSeleccinNegativa3Value] = useState(false);
-  const [seleccinNegativa4Value, setSeleccinNegativa4Value] = useState(false);
-  const [seleccinNegativa5Value, setSeleccinNegativa5Value] = useState(false);
+  const [celiaquismo, celiaquismoPositivo] = useState(false);
+  const [diabetes, diabetesPositivo] = useState(false);
+  const [BajoColesterol, BajoColesterolPositivo] = useState(false);
+  const [hipertension, hipertensionPositivo] = useState(false);
+  const [intoleranciaLactosa, intoleranciaLactosaPositivo] = useState(false);
+  const [veganismo, veganismoPositivo] = useState(false);
+  const [vegetarianismo, vegetarianismoPositivo] = useState(false);
+
+  const [listaRestricciones, setListaRestricciones] = useState([]);
+
+const GuardarRestricciones = () => {
+  const restriccion = Object.entries(switches)
+    .filter(([key, value]) => value)
+    .map(([key, value]) => `${key}`);
+
+  setListaRestricciones((listaRestricciones) => [...listaRestricciones, ...`${key}`]);
+};
 
   return (
     <View style={styles.restrictionsPage}>
-      <Image
-        style={styles.logoIcon}
-        contentFit="cover"
-        source={require("../assets/logo.png")}
-      />
-      <Text style={styles.eresAdministrador}>¿Eres administrador?</Text>
+      
+      
       <Text style={[styles.misRestricciones, styles.timeClr]}>{`Mis
 Restricciones`}</Text>
-      <Text style={[styles.hipertensin, styles.diabetesTypo]}>
-        Hipertensión
-      </Text>
       <Switch
         style={[styles.seleccinPositiva, styles.seleccinLayout]}
-        value={seleccinPositivaValue}
-        onValueChange={setSeleccinPositivaValue}
-        thumbColor="#f17f16"
-        trackColor={{ false: "#939393", true: "#ffd8b4" }}
+        value={vegetarianismo}
+        onValueChange={vegetarianismoPositivo}
+        thumbColor="#693200"
+        trackColor={{ false: "#939393", true: "#a78a6f" }}
       />
       <Switch
         style={[styles.seleccinNegativa, styles.seleccinLayout]}
-        value={seleccinNegativaValue}
-        onValueChange={setSeleccinNegativaValue}
+        value={celiaquismo}
+        onValueChange={celiaquismoPositivo}
         thumbColor="#693200"
         trackColor={{ false: "#939393", true: "#a78a6f" }}
       />
       <Switch
         style={[styles.seleccinNegativa1, styles.seleccinLayout]}
-        value={seleccinNegativa1Value}
-        onValueChange={setSeleccinNegativa1Value}
+        value={hipertension}
+        onValueChange={hipertensionPositivo}
         thumbColor="#693200"
         trackColor={{ false: "#939393", true: "#a78a6f" }}
       />
       <Switch
         style={[styles.seleccinNegativa2, styles.veganismoPosition]}
-        value={seleccinNegativa2Value}
-        onValueChange={setSeleccinNegativa2Value}
+        value={veganismo}
+        onValueChange={veganismoPositivo}
         thumbColor="#693200"
         trackColor={{ false: "#939393", true: "#a78a6f" }}
       />
       <Switch
         style={[styles.seleccinNegativa3, styles.seleccinLayout]}
-        value={seleccinNegativa3Value}
-        onValueChange={setSeleccinNegativa3Value}
+        value={BajoColesterol}
+        onValueChange={BajoColesterolPositivo}
         thumbColor="#693200"
         trackColor={{ false: "#939393", true: "#a78a6f" }}
       />
       <Switch
         style={[styles.seleccinNegativa4, styles.intoleranciaALaPosition]}
-        value={seleccinNegativa4Value}
-        onValueChange={setSeleccinNegativa4Value}
+        value={intoleranciaLactosa}
+        onValueChange={intoleranciaLactosaPositivo}
         thumbColor="#693200"
         trackColor={{ false: "#939393", true: "#a78a6f" }}
       />
-      <Text style={[styles.dietaBajaEn, styles.dietaBajaEnTypo]}>
-        Dieta baja en colesterol
-      </Text>
-      <Text style={[styles.celiaquismo, styles.dietaBajaEnTypo]}>
-        Celiaquismo
-      </Text>
       <Switch
         style={[styles.seleccinNegativa5, styles.diabetesPosition]}
-        value={seleccinNegativa5Value}
-        onValueChange={setSeleccinNegativa5Value}
+        value={diabetes}
+        onValueChange={diabetesPositivo}
         thumbColor="#693200"
         trackColor={{ false: "#939393", true: "#a78a6f" }}
       />
@@ -96,6 +86,15 @@ Restricciones`}</Text>
       </Text>
       <Text style={[styles.intoleranciaALa, styles.intoleranciaALaPosition]}>
         Intolerancia a la lactosa
+      </Text>
+      <Text style={[styles.dietaBajaEn, styles.dietaBajaEnTypo]}>
+        Dieta baja en colesterol
+      </Text>
+      <Text style={[styles.celiaquismo, styles.dietaBajaEnTypo]}>
+        Celiaquismo
+      </Text>
+      <Text style={[styles.hipertensin, styles.diabetesTypo]}>
+        Hipertensión
       </Text>
       <Text
         style={[styles.restriccionesFrecuentes, styles.ingredientesAEvitarTypo]}
@@ -112,6 +111,7 @@ Restricciones`}</Text>
         placeholder="Buscar ingrediente"
         keyboardType="default"
         placeholderTextColor="rgba(0, 0, 0, 0.4)"
+        
       />
       <View
         style={[
@@ -148,28 +148,7 @@ Restricciones`}</Text>
         contentFit="cover"
         source={require("../assets/vector.png")}
       />
-      <View style={styles.sistemaBarraArriba}>
-        <Text style={[styles.time, styles.timePosition]}>9:41</Text>
-        <View style={styles.battery}>
-          <View style={[styles.border, styles.timePosition]} />
-          <Image
-            style={[styles.capIcon, styles.timePosition]}
-            contentFit="cover"
-            source={require("../assets/cap.png")}
-          />
-          <View style={[styles.capacity, styles.timePosition]} />
-        </View>
-        <Image
-          style={styles.wifiIcon}
-          contentFit="cover"
-          source={require("../assets/wifi.png")}
-        />
-        <Image
-          style={styles.cellularConnectionIcon}
-          contentFit="cover"
-          source={require("../assets/cellular-connection.png")}
-        />
-      </View>
+      
     </View>
   );
 };

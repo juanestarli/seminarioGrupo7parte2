@@ -91,8 +91,10 @@ const ScanPage = () => {
       <Camera
         onBarCodeScanned={scanData ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
-      />}
+      />
+      }
    </View>
+   
   );
 }
 
@@ -114,10 +116,12 @@ const styles = StyleSheet.create({
     borderColor:"grey"
   },
   wrapper: {
-    alignContent: "center",
-    width: 100,
-    height: 100,
-  }
+    left: 33,
+    top: 67,
+    width: 68,
+    height: 68,
+    position: "absolute",
+  },
 });
 
 export default ScanPage;

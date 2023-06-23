@@ -33,13 +33,13 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const Tab = createBottomTabNavigator();
 function BottomTabsRoot({ navigation }) {
   const [bottomTabItemsNormal] = React.useState([
-    <IconHome2 />,
     <IconUser />,
+    <IconHome2 />,
     <IconBookSaved />,
   ]);
   const [bottomTabItemsActive] = React.useState([
-    <IconHome21 />,
     <IconUser1 />,
+    <IconHome21 />,
     <IconBookSaved1 />,
   ]);
   return (
@@ -80,14 +80,15 @@ function BottomTabsRoot({ navigation }) {
         );
       }}
     >
-      <Tab.Screen
-        name="HomePage"
-        component={HomePage}
-        options={{ headerShown: false }}
-      />
+      
       <Tab.Screen
         name="RestrictionsPage"
         component={RestrictionsPage}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="HomePage"
+        component={HomePage}
         options={{ headerShown: false }}
       />
       <Tab.Screen

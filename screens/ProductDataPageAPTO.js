@@ -79,7 +79,7 @@ CONSUMO`}</Text>
       </Pressable>
       <Pressable
         style={[styles.tarjeta, styles.tarjetaLayout]}
-        onPress={() => navigation.navigate("Nutriscore")}
+        onPress={() => navigation.navigate("Nutriscore", {dataParaApto})}
       >
         <View style={[styles.tarjetaChild, styles.image5IconLayout]} />
         <Image
