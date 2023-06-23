@@ -20,9 +20,6 @@ const ScanPage = () => {
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off) //Desactivamos el flash
   const cameraRef = useRef(null);
 
-  
-
-
   useEffect(() => {
     (async () =>{
       const cameraStatus = await BarCodeScanner.requestPermissionsAsync(); //Pedimos permiso para acceder a la camara
@@ -56,8 +53,9 @@ const ScanPage = () => {
     } else {
 
       // Nombre y Imágen
-      const productName=json.product.product_name;
+      const productName = json.product.product_name;
       const imagenUrl = json.product.image_url;
+      const nr = json.product.nutriscore_grade;
 
       await AsyncStorage.setItem('nombreProducto', productName);
       const nombreProducto= await AsyncStorage.getItem('nombreProducto');
@@ -66,6 +64,7 @@ const ScanPage = () => {
       const dataParaApto = {
         nombre : productName,
         imgUrl : imagenUrl,
+        nutriscore : nr
       };
 
       navigation.navigate("ProductDataPageAPTO", {dataParaApto})

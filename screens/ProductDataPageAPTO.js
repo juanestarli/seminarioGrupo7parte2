@@ -10,12 +10,23 @@ import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { Padding, FontFamily, FontSize, Color, Border } from "../GlobalStyles";
 import { useRoute } from '@react-navigation/native';
+import { useState, useEffect, useRef } from 'react';
 
 const ProductDataPageAPTO = () => {
   const navigation = useNavigation();
 
   const route = useRoute();
   const { dataParaApto } = route.params;
+
+  const nutriscoreImages = {
+    a: require('../assets/nutriscore-a.png'),
+    b: require('../assets/nutriscore-b.png'),
+    c: require('../assets/nutriscore-c.png'),
+    d: require('../assets/nutriscore-d.png'),
+    e: require('../assets/nutriscore-e.png')
+  };
+
+  console.log(dataParaApto.nutriscore);
 
   return (
     <View style={styles.productDataPageApto}>
@@ -80,11 +91,16 @@ CONSUMO`}</Text>
           {dataParaApto.nombre}
         </Text>
       </Pressable>
-      <ImageBackground
+      
+      {dataParaApto.nutriscore ? (
+        <ImageBackground
         style={styles.image13Icon}
         resizeMode="cover"
-        source={require("../assets/image13.png")}
-      />
+        source={nutriscoreImages[dataParaApto.nutriscore]}
+      />        ) : (
+          <></>
+      )}
+      
     </View>
   );
 };
