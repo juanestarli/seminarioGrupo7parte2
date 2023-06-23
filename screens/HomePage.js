@@ -26,27 +26,6 @@ const HomePage = () => {
           source={require("../assets/group-13.png")}
         />
       </TouchableOpacity>
-      <View style={styles.sistemaBarraArriba}>
-        <Text style={[styles.time, styles.timeFlexBox]}>9:41</Text>
-        <View style={styles.battery}>
-          <View style={styles.capacity} />
-          <Image
-            style={styles.capIcon}
-            contentFit="cover"
-            source={require("../assets/cap.png")}
-          />
-        </View>
-        <Image
-          style={styles.wifiIcon}
-          contentFit="cover"
-          source={require("../assets/wifi.png")}
-        />
-        <Image
-          style={styles.cellularConnectionIcon}
-          contentFit="cover"
-          source={require("../assets/cellular-connection.png")}
-        />
-      </View>
       <Pressable
         style={styles.container}
         onPress={() => navigation.navigate("ProductSearchPage")}

@@ -9,49 +9,26 @@ import {
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { Border, FontSize, Color, FontFamily, Padding } from "../GlobalStyles";
+import { useRoute } from '@react-navigation/native';
 
 const Nutriscore = () => {
   const navigation = useNavigation();
 
+  const route = useRoute();
+  const { dataParaNutriscore } = route.params;
+
   return (
     <View style={styles.nutriscore}>
-      <View style={[styles.sistemaBarraArriba, styles.frameParentPosition]}>
-        <Text style={styles.time}>9:41</Text>
-        <View style={[styles.battery, styles.borderPosition]}>
-          <View style={[styles.border, styles.borderPosition]} />
-          <Image
-            style={[styles.capIcon, styles.borderPosition]}
-            contentFit="cover"
-            source={require("../assets/cap.png")}
-          />
-          <View style={[styles.capacity, styles.borderPosition]} />
-        </View>
-        <Image
-          style={styles.wifiIcon}
-          contentFit="cover"
-          source={require("../assets/wifi.png")}
-        />
-        <Image
-          style={styles.cellularConnectionIcon}
-          contentFit="cover"
-          source={require("../assets/cellular-connection.png")}
-        />
-      </View>
       <View style={styles.tarjeta}>
         <View style={[styles.tarjetaChild, styles.iconLayout]} />
-        <Image
-          style={[styles.image5Icon, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/image-5.png")}
-        />
         <Text style={[styles.milanesaDeSoja, styles.milanesaDeSojaTypo]}>
-          NOMBRE DEL PRODUCTO
+          {dataParaNutriscore.nombre}
         </Text>
       </View>
       <Image
         style={[styles.image10Icon, styles.iconLayout]}
         contentFit="cover"
-        source={require("../assets/image-10.png")}
+        source={{uri : dataParaNutriscore.imgUrl}}
       />
       <Pressable
         style={styles.wrapper}

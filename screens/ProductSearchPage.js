@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Image } from "expo-image";
 import {
   StyleSheet,
@@ -10,9 +9,45 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Color, Border, FontFamily, FontSize, Padding } from "../GlobalStyles";
+import React,{useState, useEffect} from 'react';
+import axios from 'axios';
 
 const ProductSearchPage = () => {
   const navigation = useNavigation();
+
+  const [code, setCode] = useState('');
+  const [imgUrl, setImgUrl] = useState('');
+  const [img, setImg] = useState('');
+  const [nombre, setNombre] = useState('');
+
+  const [codigo, setCodigo] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleInputChange = (text) => {
+    const apiUrl = `https://world.openfoodfacts.org/api/v0/product/${text}`;
+
+    axios.get(apiUrl)
+    .then(response => {
+      // Procesar la respuesta de la API
+      const data = response.data;
+      if (data.status != 0 && data.product.product_name != null){
+        setNombre(data.product.product_name + " - " + data.product.brands);
+        setImgUrl(data.product.image_url);
+        setIsLoading(true);
+      } else {
+        setIsLoading(false);
+      }
+    })
+    .catch(error => {
+      // Manejar el error de la solicitud
+      console.error(error);
+    });
+  };
+
+  const dataParaNutriscore = {
+    nombre : nombre,
+    imgUrl : imgUrl,
+  };
 
   return (
     <View style={styles.productSearchPage}>
@@ -21,104 +56,35 @@ const ProductSearchPage = () => {
         contentFit="cover"
         source={require("../assets/logo.png")}
       />
-      <Text style={styles.eresAdministrador}>¿Eres administrador?</Text>
-      <View style={[styles.sistemaBarraArriba, styles.capIconPosition]}>
-        <Text style={[styles.time, styles.timeClr]}>9:41</Text>
-        <View style={styles.battery}>
-          <View style={styles.border} />
-          <Image
-            style={[styles.capIcon, styles.capIconPosition]}
-            contentFit="cover"
-            source={require("../assets/cap.png")}
-          />
-          <View style={styles.capacity} />
-        </View>
-        <Image
-          style={styles.wifiIcon}
-          contentFit="cover"
-          source={require("../assets/wifi.png")}
-        />
-        <Image
-          style={styles.cellularConnectionIcon}
-          contentFit="cover"
-          source={require("../assets/cellular-connection.png")}
-        />
-      </View>
       <TextInput
         style={styles.frameBusqueda}
         placeholder="Búsqueda..."
         keyboardType="default"
         placeholderTextColor="#9e9e9e"
+        onChangeText={handleInputChange}
       />
       <ScrollView
         style={styles.tarjetaParent}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.frameScrollViewContent}
       >
-        <Pressable
-          style={styles.tarjeta}
-          onPress={() => navigation.navigate("ProductDataPageAPTO")}
-        >
-          <View style={[styles.tarjetaChild, styles.image5IconLayout]} />
-          <Image
-            style={[styles.image5Icon, styles.image5IconLayout]}
-            contentFit="cover"
-            source={require("../assets/image-5.png")}
-          />
-          <Text style={[styles.milanesaDeSoja, styles.timeClr]}>
-            MILANESA DE SOJA - VEGETALÉX
-          </Text>
-        </Pressable>
-        <Pressable
-          style={styles.tarjetaShadowBox}
-          onPress={() => navigation.navigate("Nutriscore")}
-        >
-          <View style={[styles.tarjetaChild, styles.image5IconLayout]} />
-          <Image
-            style={[styles.image5Icon, styles.image5IconLayout]}
-            contentFit="cover"
-            source={require("../assets/image-5.png")}
-          />
-          <Text style={[styles.milanesaDeSoja, styles.timeClr]}>
-            MILANESA DE SOJA - GRANJA DEL SOL
-          </Text>
-        </Pressable>
-        <Pressable
-          style={styles.tarjetaShadowBox}
-          onPress={() => navigation.navigate("ProductDataPageNOAPTO")}
-        >
-          <View style={[styles.tarjetaChild, styles.image5IconLayout]} />
-          <Image
-            style={[styles.image5Icon, styles.image5IconLayout]}
-            contentFit="cover"
-            source={require("../assets/image-5.png")}
-          />
-          <Text style={[styles.milanesaDeSoja, styles.timeClr]}>
-            MILANESA DE SOJA - LUCHETTI
-          </Text>
-        </Pressable>
-        <View style={styles.tarjetaShadowBox}>
-          <View style={[styles.tarjetaChild, styles.image5IconLayout]} />
-          <Image
-            style={[styles.image5Icon, styles.image5IconLayout]}
-            contentFit="cover"
-            source={require("../assets/image-5.png")}
-          />
-          <Text style={[styles.milanesaDeSoja, styles.timeClr]}>
-            MILANESA DE SOJA - SWIFT
-          </Text>
-        </View>
-        <View style={styles.tarjetaShadowBox}>
-          <View style={[styles.tarjetaChild, styles.image5IconLayout]} />
-          <Image
-            style={[styles.image5Icon, styles.image5IconLayout]}
-            contentFit="cover"
-            source={require("../assets/image-5.png")}
-          />
-          <Text style={[styles.milanesaDeSoja, styles.timeClr]}>
-            MILANESA DE SOJA - DÍA
-          </Text>
-        </View>
+        {isLoading && nombre != null ? (
+            <Pressable
+            style={styles.tarjetaShadowBox}
+            onPress={() => navigation.navigate("Nutriscore", {dataParaNutriscore})}
+          >
+            <View style={[styles.tarjetaChild, styles.image5IconLayout]} />
+            {imgUrl ? (
+              <Image source={{ uri: imgUrl }} style={[styles.image5Icon, styles.image5IconLayout]} contentFit="cover" />
+            ) : (
+              <></>
+            )}
+            <Text style={[styles.milanesaDeSoja, styles.timeClr]}>
+              {nombre}
+            </Text>
+          </Pressable>
+        ) : null}
+        
       </ScrollView>
       <Image
         style={styles.productSearchPageChild}
@@ -142,6 +108,16 @@ const ProductSearchPage = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#ecf0f1",
+    padding: 8,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: "bold",
+  },
   frameScrollViewContent: {
     flexDirection: "column",
   },
