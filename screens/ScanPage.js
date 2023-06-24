@@ -31,6 +31,25 @@ const ScanPage = () => {
     return <Text>Sin acceso a la camara</Text>
   }
 
+  const [restricciones, setRestricciones] = useState('');
+  const [apto, setApto] = useState('');
+
+  useEffect(() => {
+    // Ejemplo de cómo recuperar un objeto JSON de AsyncStorage
+    const getData = async () => {
+      try {
+        const jsonString = await AsyncStorage.getItem('restricciones');
+        const data = JSON.parse(jsonString);
+        setRestricciones(data);
+        console.log('Restricciones recuperadas:', data);
+      } catch (error) {
+        console.log('Error al recuperar las restricciones:', error);
+      }
+    };
+
+    getData();
+  }, []);
+
   const handleBarCodeScanned = ({type, data}) => {
     setScanData(data);
     console.log(`Data: ${data}`);
@@ -56,18 +75,47 @@ const ScanPage = () => {
       const productName = json.product.product_name;
       const imagenUrl = json.product.image_url;
       const nr = json.product.nutriscore_grade;
+      const restr = [];
 
       await AsyncStorage.setItem('nombreProducto', productName);
       const nombreProducto= await AsyncStorage.getItem('nombreProducto');
+
+      setApto('true');
+
+      // VEGANISMO
+
+      if (restricciones.veganismo == true){
+        if (json.product.traces_lc == "es"){
+          setApto('false');
+          restr.push('Veganismo');
+        }
+      }
+
+      // VEGETARIANISMO
+      // CELIAQUISMO
+      // DIABETES
+      // DIETA BAJA EN COLESTEROL
+      // HIPERTENSION
+      // INTOLERANCIA A LA LACTOSA
+
+      
+
+
 
       // Armo un JSON y lo mando a APTO
       const dataParaApto = {
         nombre : productName,
         imgUrl : imagenUrl,
-        nutriscore : nr
+        nutriscore : nr,
+        restricciones : restr
       };
 
-      navigation.navigate("ProductDataPageAPTO", {dataParaApto})
+      console.log(apto);
+      if (apto == 'true'){
+        navigation.navigate("ProductDataPageAPTO", {dataParaApto});
+      } else {
+        navigation.navigate("ProductDataPageNOAPTO", {dataParaApto});
+      }
 
     }
   }

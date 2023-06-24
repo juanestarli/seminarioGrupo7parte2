@@ -30,6 +30,9 @@ import { View, Text, Pressable, TouchableOpacity } from "react-native";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
+import { useState, useEffect, useRef } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const Tab = createBottomTabNavigator();
 function BottomTabsRoot({ navigation }) {
   const [bottomTabItemsNormal] = React.useState([
@@ -101,6 +104,30 @@ function BottomTabsRoot({ navigation }) {
 }
 
 const App = () => {
+
+  useEffect(() => {
+    // Guardo las restricciones HARDCODEADAS cuando se abre la aplicación
+    const saveData = async () => {
+      try {
+        const data = {
+          celiaquismo: true,
+          diabetes: false,
+          dietaBajaEnColesterol: true,
+          hipertension: false,
+          intoleranciaALactosa: true,
+          vegetarianismo: false,
+          veganismo: true
+        };
+        const jsonString = JSON.stringify(data);
+        await AsyncStorage.setItem('restricciones', jsonString);
+      } catch (error) {
+        console.log('Error al guardar las restricciones:', error);
+      }
+    };
+
+    saveData();
+  }, []);
+
   const [hideSplashScreen, setHideSplashScreen] = React.useState(false);
   const [fontsLoaded, error] = useFonts({
     Inter_thin: require("./assets/fonts/Inter_thin.ttf"),

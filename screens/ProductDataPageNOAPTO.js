@@ -9,34 +9,24 @@ import {
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { Padding, FontFamily, FontSize, Color, Border } from "../GlobalStyles";
+import { useRoute } from '@react-navigation/native';
 
 const ProductDataPageNOAPTO = () => {
   const navigation = useNavigation();
 
+  const route = useRoute();
+  const { dataParaApto } = route.params;
+
+  const nutriscoreImages = {
+    a: require('../assets/nutriscore-a.png'),
+    b: require('../assets/nutriscore-b.png'),
+    c: require('../assets/nutriscore-c.png'),
+    d: require('../assets/nutriscore-d.png'),
+    e: require('../assets/nutriscore-e.png')
+  };
+
   return (
     <View style={styles.productDataPageNoApto}>
-      <View style={[styles.sistemaBarraArriba, styles.capIconPosition]}>
-        <Text style={[styles.time, styles.timeFlexBox]}>9:41</Text>
-        <View style={styles.battery}>
-          <View style={styles.border} />
-          <Image
-            style={[styles.capIcon, styles.capIconPosition]}
-            contentFit="cover"
-            source={require("../assets/cap.png")}
-          />
-          <View style={styles.capacity} />
-        </View>
-        <Image
-          style={styles.wifiIcon}
-          contentFit="cover"
-          source={require("../assets/wifi.png")}
-        />
-        <Image
-          style={styles.cellularConnectionIcon}
-          contentFit="cover"
-          source={require("../assets/cellular-connection.png")}
-        />
-      </View>
       <View
         style={[styles.noAptoParaSuConsumoWrapper, styles.wrapperSpaceBlock]}
       >
@@ -76,7 +66,7 @@ CONSUMO`}</Text>
           source={require("../assets/image-5.png")}
         />
         <Text style={[styles.milanesaDeSoja, styles.milanesaDeSojaFlexBox]}>
-          NOMBRE DEL PRODUCTO
+          {dataParaApto.nombre}
         </Text>
       </Pressable>
       <Image
@@ -91,18 +81,18 @@ CONSUMO`}</Text>
         ]}
       >
         <Text style={styles.restriccionesRestriccin1Container1}>
-          <Text style={styles.restricciones}>{`RESTRICCIONES:
-`}</Text>
-          <Text style={styles.restriccin1Restriccin2Re}>{`Restricción 1
-Restricción 2
-Restricción 3`}</Text>
+          <Text style={styles.restricciones}>{`RESTRICCIONES:\n`}</Text>
+          <Text style={styles.restriccin1Restriccin2Re}>{dataParaApto.restricciones.join('\n')}</Text>
         </Text>
       </Text>
-      <ImageBackground
+      {dataParaApto.nutriscore ? (
+        <ImageBackground
         style={styles.image14Icon}
         resizeMode="cover"
-        source={require("../assets/image141.png")}
-      />
+        source={nutriscoreImages[dataParaApto.nutriscore]}
+      />        ) : (
+          <></>
+      )}
       <Pressable
         style={[styles.frameParent, styles.tarjetaLayout]}
         onPress={() => navigation.navigate("ScanPage")}
@@ -124,7 +114,7 @@ Restricción 3`}</Text>
       <Image
         style={styles.image10Icon}
         contentFit="cover"
-        source={require("../assets/image-10.png")}
+        source={{uri : dataParaApto.imgUrl}}
       />
     </View>
   );
@@ -319,7 +309,6 @@ const styles = StyleSheet.create({
     color: Color.black,
   },
   restriccionesRestriccin1Container1: {
-    lineBreak: "anywhere",
     width: "100%",
   },
   restriccionesRestriccin1Container: {

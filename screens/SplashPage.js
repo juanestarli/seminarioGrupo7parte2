@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Pressable } from "react-native";
+import { Text, StyleSheet, View, Pressable, Animated, Easing } from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
@@ -9,37 +9,15 @@ const SplashPage = () => {
 
   return (
     <View style={[styles.splashPage, styles.iconLayout]}>
-      <View style={[styles.sistemaBarraArriba, styles.capIconPosition]}>
-        <Text style={[styles.time, styles.timeFlexBox]}>9:41</Text>
-        <View style={styles.battery}>
-          <View style={styles.border} />
-          <Image
-            style={[styles.capIcon, styles.capIconPosition]}
-            contentFit="cover"
-            source={require("../assets/cap.png")}
-          />
-          <View style={styles.capacity} />
-        </View>
-        <Image
-          style={styles.wifiIcon}
-          contentFit="cover"
-          source={require("../assets/wifi.png")}
-        />
-        <Image
-          style={styles.cellularConnectionIcon}
-          contentFit="cover"
-          source={require("../assets/cellular-connection.png")}
-        />
-      </View>
+      
       <Text style={[styles.checkIt, styles.timeFlexBox]}>CHECK IT</Text>
       <Image
         style={styles.splashPageChild}
         contentFit="cover"
-        source={require("../assets/ellipse-3.png")}
+        source={require("../assets/group-7.png")}
       />
       <Pressable
         style={styles.iconSpinnerAlt}
-        onPress={() => navigation.navigate("LoginPage")}
       >
         <Image
           style={[styles.icon, styles.iconLayout]}
@@ -47,7 +25,6 @@ const SplashPage = () => {
           source={require("../assets/-icon-spinneralt.png")}
         />
       </Pressable>
-      <Text style={styles.c}>C</Text>
     </View>
   );
 };

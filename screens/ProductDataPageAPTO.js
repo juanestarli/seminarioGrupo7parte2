@@ -26,8 +26,6 @@ const ProductDataPageAPTO = () => {
     e: require('../assets/nutriscore-e.png')
   };
 
-  console.log(dataParaApto.nutriscore);
-
   return (
     <View style={styles.productDataPageApto}>
       <View style={[styles.aptoParaSuConsumoWrapper, styles.wrapperSpaceBlock]}>
