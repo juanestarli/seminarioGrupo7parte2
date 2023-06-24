@@ -23,10 +23,16 @@ const ProductSearchPage = () => {
 
   const [codigo, setCodigo] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [textBusqueda, setTextBusqueda] = useState('')
+  const [inputValue, setInputValue] = useState('');
+
+  const handleBlur = () => {
+    handleInputChange(inputValue);
+  };
 
   const handleInputChange = (text) => {
     const apiUrl = `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${text}&search_simple=1&json=1`;
-    
+
     axios.get(apiUrl)
     .then(response => {
       // Procesar la respuesta de la API
@@ -34,10 +40,18 @@ const ProductSearchPage = () => {
       if (data.count != 0){
         //setNombre(data.product.product_name + " - " + data.product.brands);
         //setImgUrl(data.product.image_url);
-        setIsLoading(true);
-        setProductos(data.products)
+
+        const listaFiltrada = data.products.filter((producto) => producto.countries != undefined && (producto.countries.includes("argentina") || producto.countries.includes("Argentina")));
+        if (listaFiltrada.length != 0){
+          setIsLoading(true);
+          setProductos(listaFiltrada);
+        } else{
+          setIsLoading(false);
+          setTextBusqueda('No se encontraron coincidencias.');
+        }
       } else {
         setIsLoading(false);
+        setTextBusqueda('No se encontraron coincidencias.');
       }
     })
     .catch(error => {
@@ -63,33 +77,31 @@ const ProductSearchPage = () => {
         placeholder="Búsqueda..."
         keyboardType="default"
         placeholderTextColor="#9e9e9e"
-        onChangeText={handleInputChange}
+        onChangeText={setInputValue}
+        onBlur={handleBlur}
       />
-      <ScrollView
-        style={styles.tarjetaParent}
-        showsHorizontalScrollIndicator={true}
-        contentContainerStyle={styles.frameScrollViewContent}
-      >
+      <View style={{ top: 230, left: 30, height: 540, overflow: 'scroll' }}>
+      <ScrollView contentContainerStyle={{ paddingVertical: 0 }}>
 
         {isLoading && productos != null ? (
 
             productos.map(producto =>
 
             <Pressable
-            key={producto.key}
+              key={producto.key}
               style={styles.tarjetaShadowBox}
               onPress={() => navigation.navigate("Nutriscore", {dataParaNutriscore})}
             >
 
             <View style={[styles.tarjetaChild, styles.image5IconLayout]} />
             {producto.image_url ? (
-                <Image source={{ uri: producto.image_url }} style={[styles.image5Icon, styles.image5IconLayout]} contentFit="cover" />
+                <Image key={producto.key} source={{ uri: producto.image_url }} style={[styles.image5Icon, styles.image5IconLayout]} contentFit="cover" />
               ) : (
                 <></>
             )}
 
             {producto.product_name ? (
-                <Text style={[styles.milanesaDeSoja, styles.timeClr]}>
+                <Text key={producto.key} style={[styles.milanesaDeSoja, styles.timeClr]}>
                   {producto.product_name}
                 </Text>
               ) : (
@@ -100,9 +112,12 @@ const ProductSearchPage = () => {
 
             )
 
-        ) : null}
+        ) : <Text style={{left: 55}}>
+        {textBusqueda}
+      </Text>}
         
       </ScrollView>
+      </View>
       <Image
         style={styles.productSearchPageChild}
         contentFit="cover"
@@ -137,6 +152,7 @@ const styles = StyleSheet.create({
   },
   frameScrollViewContent: {
     flexDirection: "column",
+    paddingBottom: 125,
   },
   capIconPosition: {
     right: 0,

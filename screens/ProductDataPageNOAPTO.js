@@ -30,10 +30,7 @@ const ProductDataPageNOAPTO = () => {
       <View
         style={[styles.noAptoParaSuConsumoWrapper, styles.wrapperSpaceBlock]}
       >
-        <Text
-          style={[styles.noAptoPara, styles.noAptoParaTypo]}
-        >{`NO APTO PARA SU
-CONSUMO`}</Text>
+        <Text style={[styles.noAptoPara, styles.noAptoParaTypo]}>{`NO APTO PARA SU CONSUMO`} </Text>
       </View>
       <Pressable
         style={styles.noEstDeContainer}
@@ -57,13 +54,13 @@ CONSUMO`}</Text>
       </Pressable>
       <Pressable
         style={[styles.tarjeta, styles.tarjetaLayout]}
-        onPress={() => navigation.navigate("Nutriscore")}
+        onPress={() => navigation.navigate("Nutriscore", {dataParaApto})}
       >
         <View style={[styles.tarjetaChild, styles.iconLayout1]} />
         <Image
           style={[styles.image5Icon, styles.iconLayout]}
           contentFit="cover"
-          source={require("../assets/image-5.png")}
+          source={{uri : dataParaApto.imgUrl}}
         />
         <Text style={[styles.milanesaDeSoja, styles.milanesaDeSojaFlexBox]}>
           {dataParaApto.nombre}
@@ -97,9 +94,7 @@ CONSUMO`}</Text>
         style={[styles.frameParent, styles.tarjetaLayout]}
         onPress={() => navigation.navigate("ScanPage")}
       >
-        <View
-          style={[styles.seguirEscaneandoWrapper, styles.wrapperSpaceBlock]}
-        >
+        <View style={[styles.seguirEscaneandoWrapper, styles.wrapperSpaceBlock]}>
           <Text style={[styles.seguirEscaneando, styles.milanesaDeSojaFlexBox]}>
             {" "}
             SEGUIR ESCANEANDO
@@ -111,11 +106,7 @@ CONSUMO`}</Text>
           source={require("../assets/group-1.png")}
         />
       </Pressable>
-      <Image
-        style={styles.image10Icon}
-        contentFit="cover"
-        source={{uri : dataParaApto.imgUrl}}
-      />
+
     </View>
   );
 };
@@ -227,7 +218,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   noAptoParaSuConsumoWrapper: {
-    top: 327,
+    top: 280,
     borderRadius: Border.br_6xl,
     backgroundColor: Color.brown,
     width: 333,
@@ -235,17 +226,17 @@ const styles = StyleSheet.create({
   },
   noEstDeAcuerdo: {
     fontSize: FontSize.size_sm,
-    textDecoration: "underline",
     color: Color.black,
+    textDecorationLine: 'underline',
   },
   noEstDeContainer: {
-    left: 206,
-    top: 802,
+    left: 200,
+    top: 755,
     position: "absolute",
   },
   wrapper: {
     left: 17,
-    top: 62,
+    top: 30,
     width: 68,
     height: 68,
     position: "absolute",
@@ -282,7 +273,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   tarjeta: {
-    top: 435,
+    top: 395,
     shadowColor: "rgba(0, 0, 0, 0.25)",
     shadowOffset: {
       width: 0,
@@ -295,12 +286,12 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   iconTimesCircle: {
-    height: "25.24%",
-    width: "54.62%",
-    top: "10.9%",
-    right: "22.56%",
+    height: 180,
+    width: 180,
+    top: 70,
+    right: "26%",
     bottom: "63.86%",
-    left: "22.82%",
+    left: "26%",
   },
   restricciones: {
     color: Color.red,
@@ -312,7 +303,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   restriccionesRestriccin1Container: {
-    top: 582,
+    top: 540,
     left: 37,
     fontSize: FontSize.size_lg,
     fontWeight: "600",
@@ -322,10 +313,10 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   image14Icon: {
-    top: 405,
-    left: 331,
+    top: 365,
+    left: 340,
     borderRadius: 21,
-    width: 49,
+    width: 40,
     height: 65,
     position: "absolute",
   },
@@ -333,6 +324,8 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     fontFamily: FontFamily.workSansBold,
     textAlign: "right",
+    right: 8,
+    top: 14,
     width: 271,
     fontSize: FontSize.size_xl,
     display: "flex",
@@ -340,7 +333,7 @@ const styles = StyleSheet.create({
     color: Color.black,
   },
   seguirEscaneandoWrapper: {
-    top: 4,
+    top: -40,
     left: 34,
     borderRadius: Border.br_3xs,
     backgroundColor: Color.chocolate,
@@ -351,12 +344,12 @@ const styles = StyleSheet.create({
     left: -4,
     width: 92,
     height: 92,
-    top: 0,
+    top: -45,
     position: "absolute",
   },
   frameParent: {
     top: 689,
-    height: 84,
+    height: 35,
     position: "absolute",
   },
   image10Icon: {

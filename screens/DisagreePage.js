@@ -4,6 +4,7 @@ import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { Color, Padding, FontSize, FontFamily, Border } from "../GlobalStyles";
 import { useState, useEffect, useRef } from 'react';
+import Toast, { DURATION } from 'react-native-easy-toast';
 
 const DisagreePage = () => {
   const navigation = useNavigation();
@@ -13,13 +14,18 @@ const DisagreePage = () => {
   function pressEnviar() {
     this.myTextInput.current.clear(); 
     this.myTextInput.current.blur();
+    handleSend();
   }
+
+  const toastRef = useRef(null);
+  const handleSend = () => {
+    toastRef.current.show('Tu comentario fue enviado correctamente', DURATION.LENGTH_LONG);
+  };
 
   return (
     <View style={styles.disagreePage}>
-      
       <Text style={[styles.noEstDe, styles.aFlexBox]}>
-        ¿NO ESTÁ DE ACUERDO? CUÉNTANOS POR QUÉ
+        {'¿NO ESTÁ DE ACUERDO?\n CUÉNTANOS POR QUÉ'}
       </Text>
       <TextInput
         ref={this.myTextInput}
@@ -48,6 +54,11 @@ const DisagreePage = () => {
           source={require("../assets/group-4.png")}
         />
       </Pressable>
+      <Toast
+        ref={toastRef}
+        style={{ backgroundColor: 'gray', position: 'absolute', top: 0 }}
+        position="top"
+      />
     </View>
   );
 };
@@ -127,13 +138,13 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   noEstDe: {
-    top: 168,
-    left: 52,
+    top: 160,
+    left: 45,
     fontSize: FontSize.size_mid,
-    fontWeight: "700",
+    fontWeight: "900",
     fontFamily: FontFamily.niramitBold,
-    textAlign: "left",
-    width: 198,
+    textAlign: "center",
+    width: 300,
     position: "absolute",
   },
   frameBusqueda: {
@@ -158,7 +169,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   botonEnviarFeedback: {
-    top: 712,
+    top: 685,
     left: 31,
     borderRadius: Border.br_3xs,
     backgroundColor: Color.darkorange,

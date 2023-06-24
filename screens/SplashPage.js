@@ -3,9 +3,34 @@ import { Text, StyleSheet, View, Pressable, Animated, Easing } from "react-nativ
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
+import { useEffect, useRef } from 'react';
 
 const SplashPage = () => {
   const navigation = useNavigation();
+
+  const rotation = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const rotateAnimation = Animated.loop(
+      Animated.timing(rotation, {
+        toValue: 1,
+        duration: 2000,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      })
+    );
+
+    rotateAnimation.start();
+
+    return () => {
+      rotateAnimation.stop();
+    };
+  }, []);
+
+  const spin = rotation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  });
 
   return (
     <View style={[styles.splashPage, styles.iconLayout]}>
@@ -19,10 +44,9 @@ const SplashPage = () => {
       <Pressable
         style={styles.iconSpinnerAlt}
       >
-        <Image
-          style={[styles.icon, styles.iconLayout]}
-          contentFit="cover"
+        <Animated.Image
           source={require("../assets/-icon-spinneralt.png")}
+          style={{ width: 80, height: 80, left: -4, transform: [{ rotate: spin }] }}
         />
       </Pressable>
     </View>
@@ -105,17 +129,17 @@ const styles = StyleSheet.create({
     height: 40,
   },
   checkIt: {
-    top: 413,
-    left: 80,
+    top: 340,
+    left: 90,
     fontSize: FontSize.size_29xl,
     fontWeight: "900",
     fontFamily: FontFamily.interBlack,
   },
   splashPageChild: {
-    top: 243,
-    left: 119,
-    width: 153,
-    height: 153,
+    top: 150,
+    left: 107,
+    width: 175,
+    height: 178,
     position: "absolute",
   },
   icon: {

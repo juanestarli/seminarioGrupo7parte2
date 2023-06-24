@@ -9,28 +9,7 @@ const ProductDataPageNOSEENCUEN = () => {
 
   return (
     <View style={styles.productDataPageNoSeEncuen}>
-      <View style={[styles.sistemaBarraArriba, styles.groupChildPosition]}>
-        <Text style={[styles.time, styles.timeFlexBox]}>9:41</Text>
-        <View style={[styles.battery, styles.borderPosition]}>
-          <View style={[styles.border, styles.borderPosition]} />
-          <Image
-            style={[styles.capIcon, styles.borderPosition]}
-            contentFit="cover"
-            source={require("../assets/cap.png")}
-          />
-          <View style={[styles.capacity, styles.borderPosition]} />
-        </View>
-        <Image
-          style={styles.wifiIcon}
-          contentFit="cover"
-          source={require("../assets/wifi.png")}
-        />
-        <Image
-          style={styles.cellularConnectionIcon}
-          contentFit="cover"
-          source={require("../assets/cellular-connection.png")}
-        />
-      </View>
+
       <Pressable
         style={styles.wrapper}
         onPress={() =>

@@ -37,7 +37,7 @@ const HomePage = () => {
         />
       </Pressable>
       <Text style={[styles.chequeTusProductos, styles.timeFlexBox]}>
-        ¡Chequeá tus productos, antes de llevarlos!
+        ¡Chequeá tus productos antes de llevarlos!
       </Text>
       <Image
         style={styles.homePageChild}
@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   wrapper: {
-    left: 96,
-    top: 316,
+    left: 90,
+    top: 260,
     width: 209,
     height: 210,
     position: "absolute",
@@ -123,21 +123,21 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   container: {
-    left: 131,
-    top: 568,
+    left: 127,
+    top: 520,
     width: 138,
     height: 138,
     position: "absolute",
   },
   chequeTusProductos: {
-    top: 244,
+    top: 175,
     left: 30,
     fontSize: FontSize.size_mid,
     fontWeight: "600",
     fontFamily: FontFamily.niramitSemibold,
   },
   homePageChild: {
-    top: 107,
+    top: 50,
     left: 141,
     width: 108,
     height: 110,

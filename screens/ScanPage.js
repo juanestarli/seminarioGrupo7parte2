@@ -85,7 +85,7 @@ const ScanPage = () => {
       // VEGANISMO
 
       if (restricciones.veganismo == true){
-        if (json.product.traces_lc == "es"){
+        if (1==1){
           setApto('false');
           restr.push('Veganismo');
         }

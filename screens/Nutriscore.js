@@ -314,7 +314,6 @@ const styles = StyleSheet.create({
     color: Color.black,
   },
   aspectosPositivosRaznContainer1: {
-    lineBreak: "anywhere",
     width: "100%",
   },
   aspectosPositivosRaznContainer: {
