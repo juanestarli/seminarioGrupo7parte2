@@ -1,26 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Image } from "expo-image";
 import {StyleSheet,Text,  Switch,  TextInput,  View,  Pressable,} from "react-native";
 import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 
 const RestrictionsPage = () => {
-  const [celiaquismo, celiaquismoPositivo] = useState(false);
-  const [diabetes, diabetesPositivo] = useState(false);
-  const [BajoColesterol, BajoColesterolPositivo] = useState(false);
-  const [hipertension, hipertensionPositivo] = useState(false);
-  const [intoleranciaLactosa, intoleranciaLactosaPositivo] = useState(false);
-  const [veganismo, veganismoPositivo] = useState(false);
-  const [vegetarianismo, vegetarianismoPositivo] = useState(false);
+  const [celiaquismo, setCeliaquismo] = useState(false);
+  const [diabetes, setDiabetes] = useState(false);
+  const [bajoColesterol, setBajoColesterol] = useState(false);
+  const [hipertension, setHipertension] = useState(false);
+  const [intoleranciaLactosa, setIntoleranciaLactosa] = useState(false);
+  const [veganismo, setVeganismo] = useState(false);
+  const [vegetarianismo, setVegetarianismo] = useState(false);
 
-  const [listaRestricciones, setListaRestricciones] = useState([]);
+  const [restricciones, setRestricciones] = useState([]);
 
-const GuardarRestricciones = () => {
-  const restriccion = Object.entries(switches)
-    .filter(([key, value]) => value)
-    .map(([key, value]) => `${key}`);
+  useEffect(() => {
+    actualizarRestricciones();
+  }, [celiaquismo, diabetes, bajoColesterol, hipertension, intoleranciaLactosa, veganismo, vegetarianismo]);
 
-  setListaRestricciones((listaRestricciones) => [...listaRestricciones, ...`${key}`]);
-};
+  const actualizarRestricciones = () => {
+    const nuevasRestricciones = [];
+
+    if (celiaquismo) nuevasRestricciones.push('Celiaquismo');
+    if (diabetes) nuevasRestricciones.push('Diabetes');
+    if (bajoColesterol) nuevasRestricciones.push('Bajo Colesterol');
+    if (hipertension) nuevasRestricciones.push('Hipertensión');
+    if (intoleranciaLactosa) nuevasRestricciones.push('Intolerancia a la Lactosa');
+    if (veganismo) nuevasRestricciones.push('Veganismo');
+    if (vegetarianismo) nuevasRestricciones.push('Vegetarianismo');
+
+    setRestricciones(nuevasRestricciones);
+    console.log('Restricciones actualizadas:', nuevasRestricciones);
+  };
+
+  const cambiarCeliaquismo = (value) => {
+    setCeliaquismo(value);
+  };
+
+  const cambiarDiabetes = (value) => {
+    setDiabetes(value);
+  };
+
+  const cambiarBajoColesterol = (value) => {
+    setBajoColesterol(value);
+  };
+
+  const cambiarHipertension = (value) => {
+    setHipertension(value);
+  };
+
+  const cambiarIntoleranciaLactosa = (value) => {
+    setIntoleranciaLactosa(value);
+  };
+
+  const cambiarVeganismo = (value) => {
+    setVeganismo(value);
+  };
+
+  const cambiarVegetarianismo = (value) => {
+    setVegetarianismo(value);
+  };
+
 
   return (
     <View style={styles.restrictionsPage}>
@@ -31,49 +71,49 @@ Restricciones`}</Text>
       <Switch
         style={[styles.seleccinPositiva, styles.seleccinLayout]}
         value={vegetarianismo}
-        onValueChange={vegetarianismoPositivo}
+        onValueChange={cambiarVegetarianismo}
         thumbColor="#693200"
         trackColor={{ false: "#939393", true: "#a78a6f" }}
       />
       <Switch
         style={[styles.seleccinNegativa, styles.seleccinLayout]}
         value={celiaquismo}
-        onValueChange={celiaquismoPositivo}
+        onValueChange={cambiarCeliaquismo}
         thumbColor="#693200"
         trackColor={{ false: "#939393", true: "#a78a6f" }}
       />
       <Switch
         style={[styles.seleccinNegativa1, styles.seleccinLayout]}
         value={hipertension}
-        onValueChange={hipertensionPositivo}
+        onValueChange={cambiarHipertension}
         thumbColor="#693200"
         trackColor={{ false: "#939393", true: "#a78a6f" }}
       />
       <Switch
         style={[styles.seleccinNegativa2, styles.veganismoPosition]}
         value={veganismo}
-        onValueChange={veganismoPositivo}
+        onValueChange={cambiarVeganismo}
         thumbColor="#693200"
         trackColor={{ false: "#939393", true: "#a78a6f" }}
       />
       <Switch
         style={[styles.seleccinNegativa3, styles.seleccinLayout]}
-        value={BajoColesterol}
-        onValueChange={BajoColesterolPositivo}
+        value={bajoColesterol}
+        onValueChange={cambiarBajoColesterol}
         thumbColor="#693200"
         trackColor={{ false: "#939393", true: "#a78a6f" }}
       />
       <Switch
         style={[styles.seleccinNegativa4, styles.intoleranciaALaPosition]}
         value={intoleranciaLactosa}
-        onValueChange={intoleranciaLactosaPositivo}
+        onValueChange={cambiarIntoleranciaLactosa}
         thumbColor="#693200"
         trackColor={{ false: "#939393", true: "#a78a6f" }}
       />
       <Switch
         style={[styles.seleccinNegativa5, styles.diabetesPosition]}
         value={diabetes}
-        onValueChange={diabetesPositivo}
+        onValueChange={cambiarDiabetes}
         thumbColor="#693200"
         trackColor={{ false: "#939393", true: "#a78a6f" }}
       />
