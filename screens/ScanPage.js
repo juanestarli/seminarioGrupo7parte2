@@ -1,14 +1,17 @@
-import { StyleSheet, Text, View, Image ,Dimensions ,Alert, Button, ButtonProps, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable, Dimensions ,Alert, Button, ButtonProps, TouchableOpacity} from 'react-native';
 import { Camera} from 'expo-camera';
 import { useState, useEffect, useRef } from 'react';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import {useIsFocused} from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast, { DURATION } from 'react-native-easy-toast';
 
 
 const ScanPage = () => {
   const navigation = useNavigation();
+
+  const toastRef = useRef(null);
   
   //Variables lector de barra
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
@@ -51,6 +54,8 @@ const ScanPage = () => {
   }, []);
 
   const handleBarCodeScanned = ({type, data}) => {
+    this.camera.pausePreview();
+    toastRef.current.show('Procesando código...', DURATION.LENGTH_LONG);
     setScanData(data);
     console.log(`Data: ${data}`);
     console.log(`Type: ${type}`); 
@@ -136,12 +141,31 @@ const ScanPage = () => {
   return (
     <View style={styles.container}>
       {viewFocused &&
-      <Camera
+      <Camera 
+        ref={(ref) => { this.camera = ref; }}
         onBarCodeScanned={scanData ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
+        style={styles.cam}
       />
       }
+      <Pressable
+        style={styles.wrapper}
+        onPress={() =>
+          navigation.navigate("BottomTabsRoot", { screen: "HomePage" })
+        }
+      >
+        <Image
+          style={styles.iconLayout}
+          contentFit="cover"
+          source={require("../assets/group-4.png")}
+        />
+      </Pressable>
+      <Toast
+        ref={toastRef}
+        style={{ backgroundColor: 'gray', position: 'absolute', top: 100 }}
+        position="top"
+      />
    </View>
+   
    
   );
 }
@@ -152,23 +176,29 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     width:Dimensions.get('screen').width-15,
     height:Dimensions.get('screen').height,
-    overflow:'hidden',
     flexDirection:'column-reverse',
-    borderTopStartRadius:50,
-    borderTopEndRadius:50,
-    borderBottomStartRadius:30,
-    borderBottomEndRadius:30,
     marginTop:80,
     marginBottom:20,
     borderWidth:5,
     borderColor:"grey"
   },
+  cam: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+  },
   wrapper: {
-    left: 33,
-    top: 67,
+    left: 147,
+    top: -73,
     width: 68,
     height: 68,
     position: "absolute",
+  },
+  iconLayout: {
+    height: "100%",
+    width: "100%",
   },
 });
 
