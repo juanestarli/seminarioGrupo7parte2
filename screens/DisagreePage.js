@@ -19,7 +19,7 @@ const DisagreePage = () => {
 
   const toastRef = useRef(null);
   const handleSend = () => {
-    toastRef.current.show('Tu comentario fue enviado correctamente', DURATION.LENGTH_LONG);
+    toastRef.current.show('Tu comentario fue enviado correctamente.', DURATION.LENGTH_LONG);
   };
 
   return (

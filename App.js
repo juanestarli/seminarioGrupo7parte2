@@ -111,16 +111,8 @@ const App = () => {
     // Guardo las restricciones HARDCODEADAS cuando se abre la aplicación
     const saveData = async () => {
       try {
-        const data = {
-          celiaquismo: true,
-          diabetes: false,
-          dietaBajaEnColesterol: true,
-          hipertension: false,
-          intoleranciaALactosa: true,
-          vegetarianismo: false,
-          veganismo: true
-        };
-        const jsonString = JSON.stringify(data);
+        const restricciones = [];
+        const jsonString = JSON.stringify(restricciones);
         await AsyncStorage.setItem('restricciones', jsonString);
       } catch (error) {
         console.log('Error al guardar las restricciones:', error);

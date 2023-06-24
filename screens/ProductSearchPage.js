@@ -62,9 +62,17 @@ const ProductSearchPage = () => {
     });
   };
 
-  const dataParaNutriscore = {
-    nombre : nombre,
-    imgUrl : imgUrl,
+  const handlePress = (index) => {
+    const prod = productos[index];
+
+    console.log(prod.product_name)
+    const dataParaApto = {
+      nombre : prod.product_name,
+      imgUrl : prod.image_url,
+      nr : prod.nutriscore_grade,
+    };
+
+    navigation.navigate("Nutriscore", {dataParaApto});
   };
 
   return (
@@ -87,23 +95,23 @@ const ProductSearchPage = () => {
 
         {isLoading && productos != null ? (
 
-            productos.map(producto =>
+            productos.map((producto, index) =>
 
             <Pressable
-              key={producto.key}
+              key={index}
               style={styles.tarjetaShadowBox}
-              onPress={() => navigation.navigate("Nutriscore", {dataParaNutriscore})}
+              onPress={() => handlePress(index)}
             >
 
             <View style={[styles.tarjetaChild, styles.image5IconLayout]} />
             {producto.image_url ? (
-                <Image key={producto.key} source={{ uri: producto.image_url }} style={[styles.image5Icon, styles.image5IconLayout]} contentFit="cover" />
+                <Image source={{ uri: producto.image_url }} style={[styles.image5Icon, styles.image5IconLayout]} contentFit="cover" />
               ) : (
                 <></>
             )}
 
             {producto.product_name ? (
-                <Text key={producto.key} style={[styles.milanesaDeSoja, styles.timeClr]}>
+                <Text style={[styles.milanesaDeSoja, styles.timeClr]}>
                   {producto.product_name}
                 </Text>
               ) : (

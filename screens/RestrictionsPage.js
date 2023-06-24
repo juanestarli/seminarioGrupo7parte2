@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Image } from "expo-image";
 import {StyleSheet,Text,  Switch,  TextInput,  View,  Pressable,} from "react-native";
 import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast, { DURATION } from 'react-native-easy-toast';
 
 const RestrictionsPage = () => {
   const [celiaquismo, setCeliaquismo] = useState(false);
@@ -14,51 +16,93 @@ const RestrictionsPage = () => {
 
   const [restricciones, setRestricciones] = useState([]);
 
+  const toastRef = useRef(null);
+  const handleSend = () => {
+    toastRef.current.show('Restricciones actualizadas.', DURATION.LENGTH_LONG);
+  };
+
   useEffect(() => {
     actualizarRestricciones();
   }, [celiaquismo, diabetes, bajoColesterol, hipertension, intoleranciaLactosa, veganismo, vegetarianismo]);
 
   const actualizarRestricciones = () => {
+
     const nuevasRestricciones = [];
 
     if (celiaquismo) nuevasRestricciones.push('Celiaquismo');
     if (diabetes) nuevasRestricciones.push('Diabetes');
-    if (bajoColesterol) nuevasRestricciones.push('Bajo Colesterol');
+    if (bajoColesterol) nuevasRestricciones.push('Dieta baja en Colesterol');
     if (hipertension) nuevasRestricciones.push('Hipertensión');
     if (intoleranciaLactosa) nuevasRestricciones.push('Intolerancia a la Lactosa');
     if (veganismo) nuevasRestricciones.push('Veganismo');
     if (vegetarianismo) nuevasRestricciones.push('Vegetarianismo');
 
     setRestricciones(nuevasRestricciones);
+
     console.log('Restricciones actualizadas:', nuevasRestricciones);
   };
 
+  useEffect(() => {
+    const saveData = async () => {
+      try {
+        await AsyncStorage.setItem('restricciones', JSON.stringify(restricciones));
+      } catch (error) {
+        console.log('Error al actualizar las restricciones:', error);
+      }
+    };
+  
+    saveData();
+  }, [restricciones]);
+
+  useEffect(() => {
+    // Ejemplo de cómo recuperar un objeto JSON de AsyncStorage
+    const getData = async () => {
+      try {
+        const jsonString = await AsyncStorage.getItem('restricciones');
+        const data = JSON.parse(jsonString);
+        setRestricciones(data);
+        console.log('Restricciones recuperadas:', data);
+      } catch (error) {
+        console.log('Error al recuperar las restricciones:', error);
+      }
+    };
+
+    getData();
+  }, []);
+
   const cambiarCeliaquismo = (value) => {
     setCeliaquismo(value);
+    handleSend();
   };
 
   const cambiarDiabetes = (value) => {
     setDiabetes(value);
+    handleSend();
   };
 
   const cambiarBajoColesterol = (value) => {
     setBajoColesterol(value);
+    handleSend();
   };
 
   const cambiarHipertension = (value) => {
     setHipertension(value);
+    handleSend();
   };
 
   const cambiarIntoleranciaLactosa = (value) => {
     setIntoleranciaLactosa(value);
+    handleSend();
   };
 
   const cambiarVeganismo = (value) => {
     setVeganismo(value);
+    handleSend();
   };
 
   const cambiarVegetarianismo = (value) => {
     setVegetarianismo(value);
+    handleSend();
   };
 
 
@@ -188,6 +232,12 @@ Restricciones`}</Text>
         contentFit="cover"
         source={require("../assets/vector.png")}
       />
+
+      <Toast
+        ref={toastRef}
+        style={{ backgroundColor: 'gray', position: 'absolute', top: 30 }}
+        position="top"
+      />
       
     </View>
   );
@@ -208,11 +258,11 @@ const styles = StyleSheet.create({
     width: 40,
   },
   veganismoPosition: {
-    top: 453,
+    top: 410,
     position: "absolute",
   },
   intoleranciaALaPosition: {
-    top: 409,
+    top: 366,
     position: "absolute",
   },
   dietaBajaEnTypo: {
@@ -225,11 +275,11 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   diabetesPosition: {
-    top: 277,
+    top: 234,
     position: "absolute",
   },
   vegetarianismoPosition: {
-    top: 497,
+    top: 454,
     position: "absolute",
   },
   ingredientesAEvitarTypo: {
@@ -294,15 +344,16 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   misRestricciones: {
-    top: 76,
-    left: 84,
+    top: 40,
+    left: 94,
     fontSize: FontSize.size_13xl,
-    fontWeight: "900",
+    fontWeight: '900',
     fontFamily: FontFamily.interBlack,
+    
     position: "absolute",
   },
   hipertensin: {
-    top: 366,
+    top: 323,
     fontFamily: FontFamily.interSemibold,
     fontWeight: "600",
     left: 87,
@@ -314,16 +365,16 @@ const styles = StyleSheet.create({
     left: 31,
     height: 20,
     width: 40,
-    top: 497,
+    top: 454,
     position: "absolute",
   },
   seleccinNegativa: {
     left: 32,
-    top: 233,
+    top: 190,
     position: "absolute",
   },
   seleccinNegativa1: {
-    top: 365,
+    top: 323,
     left: 31,
     height: 20,
     width: 40,
@@ -335,7 +386,7 @@ const styles = StyleSheet.create({
     left: 31,
   },
   seleccinNegativa3: {
-    top: 321,
+    top: 278,
     left: 31,
     height: 20,
     width: 40,
@@ -347,10 +398,10 @@ const styles = StyleSheet.create({
     left: 31,
   },
   dietaBajaEn: {
-    top: 321,
+    top: 278,
   },
   celiaquismo: {
-    top: 233,
+    top: 190,
   },
   seleccinNegativa5: {
     height: 20,
@@ -390,13 +441,13 @@ const styles = StyleSheet.create({
     left: 87,
   },
   restriccionesFrecuentes: {
-    top: 190,
+    top: 150,
   },
   ingredientesAEvitar: {
-    top: 543,
+    top: 505,
   },
   restrictionsPageChild: {
-    top: 583,
+    top: 540,
     fontSize: FontSize.size_lg,
     height: 42,
     width: 328,
@@ -417,16 +468,16 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   tartrazinaColoranteAmarilloWrapper: {
-    top: 649,
+    top: 600,
   },
   vectorIcon: {
-    top: 662,
+    top: 613,
   },
   sorbitolWrapper: {
-    top: 710,
+    top: 661,
   },
   vectorIcon1: {
-    top: 723,
+    top: 674,
   },
   time: {
     marginTop: -8,

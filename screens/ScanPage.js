@@ -75,7 +75,7 @@ const ScanPage = () => {
       const productName = json.product.product_name;
       const imagenUrl = json.product.image_url;
       const nr = json.product.nutriscore_grade;
-      const restr = [];
+      const restr = restricciones;
 
       await AsyncStorage.setItem('nombreProducto', productName);
       const nombreProducto= await AsyncStorage.getItem('nombreProducto');
