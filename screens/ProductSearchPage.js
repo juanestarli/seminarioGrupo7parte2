@@ -27,6 +27,8 @@ const ProductSearchPage = () => {
   const [inputValue, setInputValue] = useState('');
 
   const handleBlur = () => {
+    setTextBusqueda('Buscando...');
+    setProductos(null);
     handleInputChange(inputValue);
   };
 
@@ -41,7 +43,7 @@ const ProductSearchPage = () => {
         //setNombre(data.product.product_name + " - " + data.product.brands);
         //setImgUrl(data.product.image_url);
 
-        const listaFiltrada = data.products.filter((producto) => producto.countries != undefined && (producto.countries.includes("argentina") || producto.countries.includes("Argentina")));
+        const listaFiltrada = data.products.filter((producto) => producto.countries != undefined && (producto.countries.includes("argentina") || producto.countries.includes("Argentina") || producto.countries.includes("Argentine") || producto.countries.includes("argentine")));
         if (listaFiltrada.length != 0){
           setIsLoading(true);
           setProductos(listaFiltrada);
