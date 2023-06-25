@@ -12,32 +12,40 @@ import { useNavigation } from "@react-navigation/native";
 import { Border, Color, FontSize, FontFamily } from "../GlobalStyles";
 import { useState, useEffect, useRef } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { isLoaded } from "expo-font";
 
 const HistorialPage = () => {
   const navigation = useNavigation();
 
   const [productosHistorial, setProductosHistorial] = useState([]);
-
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  
   useEffect(() => {
     // Ejemplo de cómo recuperar un objeto JSON de AsyncStorage
     const getData = async () => {
       try {
         const jsonString = await AsyncStorage.getItem('productosHistorial');
-        const data = JSON.parse(jsonString);
-        setProductosHistorial(data);
-        console.log('Historial recuperado:', data);
+        const historialArray = JSON.parse(jsonString) || [];
+
+        setIsDataLoaded(true);
+        setProductosHistorial(historialArray);
+        console.log('Historial recuperado:', historialArray);
       } catch (error) {
         console.log('Error al recuperar el historial:', error);
       }
     };
+ 
+    if (!isDataLoaded){
+      getData();
+    }
 
-    getData();
-  }, []);
+  }, [productosHistorial]);
+
 
   return (
     <View style={styles.historialPage}>
       <StatusBar style={styles.wrapperPosition} barStyle="default" />
-      <View style={{ top: 230, left: 30, height: 540, overflow: 'scroll' }}>
+      <View style={{ top: 200, left: 30, height: 465, overflow: 'scroll' }}>
       <ScrollView contentContainerStyle={{ paddingVertical: 0 }}>
 
         {productosHistorial != null &&  productosHistorial.length !== 0 ? (
@@ -51,15 +59,15 @@ const HistorialPage = () => {
             >
 
             <View style={[styles.tarjetaChild, styles.image5IconLayout]} />
-            {producto.image_url ? (
-                <Image source={{ uri: producto.image_url }} style={[styles.image5Icon, styles.image5IconLayout]} contentFit="cover" />
+            {producto.imgUrl ? (
+                <Image source={{ uri: producto.imgUrl }} style={[styles.image5Icon, styles.image5IconLayout]} contentFit="cover" />
               ) : (
                 <></>
             )}
 
-            {producto.product_name ? (
+            {producto.nombre ? (
                 <Text style={[styles.milanesaDeSoja, styles.timeClr]}>
-                  {producto.product_name}
+                  {producto.nombre}
                 </Text>
               ) : (
                 <></>
@@ -69,7 +77,7 @@ const HistorialPage = () => {
 
             )
 
-        ) : <Text style={{left: 65}}>
+        ) : <Text style={{left: 68}}>
         No tiene productos en el historial.
       </Text>}
         

@@ -53,25 +53,26 @@ const ScanPage = () => {
     getData();
   }, []);
 
-  const agregarAlHistorial = async (producto) => {
+  const agregarAlHistorial = async (p) => {
     try {
       // Obtén el historial actual almacenado en AsyncStorage
       const historialActual = await AsyncStorage.getItem('productosHistorial');
-      console.log(historialActual)
+      const historialArray = JSON.parse(historialActual) || [];
   
       // Agrega el producto al historial
-      historialActual.push(producto);
+      historialArray.push(p);
+
+      console.log(historialArray)
   
-      console.log(historialActual)
       // Actualiza el historial en AsyncStorage
-      await AsyncStorage.setItem('productosHistorial', JSON.stringify(historialActual));
+      await AsyncStorage.setItem('productosHistorial', JSON.stringify(historialArray));
     } catch (error) {
       console.log('Error al agregar al historial:', error);
     }
   };
 
-  const handleHistorial = (prodHistorial) => {
-    agregarAlHistorial(prodHistorial);
+  const handleHistorial = (p) => {
+    agregarAlHistorial(p);
   };
 
   const handleBarCodeScanned = ({type, data}) => {
@@ -81,7 +82,6 @@ const ScanPage = () => {
     console.log(`Data: ${data}`);
     console.log(`Type: ${type}`); 
     getNameProduct(data);
-    
   }
 
   const getNameProduct = async (data) => {
@@ -104,8 +104,8 @@ const ScanPage = () => {
       const restr = restricciones;
       const ingredients = json.ingredients_tags;
       console.log(ingredients);
-      await AsyncStorage.setItem('nombreProducto', productName);
-      const nombreProducto= await AsyncStorage.getItem('nombreProducto');
+      //await AsyncStorage.setItem('nombreProducto', productName);
+      //const nombreProducto= await AsyncStorage.getItem('nombreProducto');
 
       setApto(verificarIngredientes(ingredients));
       
@@ -213,14 +213,13 @@ const ScanPage = () => {
 
       // Lo agrego al historial
 
-      const prodHistorial = {
+      const prodHistorialOk = {
         nombre : productName,
         imgUrl : imagenUrl,
         nutriscore : nr
       };
 
-      console.log(prodHistorial)
-      // arreglar lo de agregar, lo saque pq tiraba error
+      handleHistorial(prodHistorialOk);
 
       if (apto == true){
         navigation.navigate("ProductDataPageAPTO", {dataParaApto});
