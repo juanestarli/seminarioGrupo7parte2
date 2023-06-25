@@ -35,7 +35,7 @@ const ScanPage = () => {
   }
 
   const [restricciones, setRestricciones] = useState('');
-  const [apto, setApto] = useState('');
+  const [apto, setApto] = useState(true);
 
   useEffect(() => {
     // Ejemplo de cómo recuperar un objeto JSON de AsyncStorage
@@ -81,20 +81,84 @@ const ScanPage = () => {
       const imagenUrl = json.product.image_url;
       const nr = json.product.nutriscore_grade;
       const restr = restricciones;
-
+      const ingredients = [json.product.ingredients_analysis]
+      console.log(ingredients);
       await AsyncStorage.setItem('nombreProducto', productName);
       const nombreProducto= await AsyncStorage.getItem('nombreProducto');
 
-      setApto('true');
+      setApto(true);
+      verificarIngredientes(ingredients);    
 
-      // VEGANISMO
+      function verificarIngredientes(ingredientes) {
+        const noAptoParaVeganos = [
+          'carmín/cochinilla (E120)',
+          'carmine/cochineal (E120)',
+          'caseína',
+          'casein',
+          'lactosa',
+          'lactose',
+          'suero de leche',
+          'whey',
+          'colágeno',
+          'collagen',
+          'elastina',
+          'elastin',
+          'queratina',
+          'keratin',
+          'gelatina',
+          'gelatin',
+          'gelatina áspic',
+          'aspic gelatin',
+          'lardo/sebo',
+          'lard/tallow',
+          'shellac/goma laca',
+          'shellac',
+          'cera de abeja (E901)',
+          'beeswax (E901)',
+          'propóleo',
+          'propolis',
+          'jalea real',
+          'royal jelly',
+          'vitamina D3',
+          'vitamin D3',
+          'lanolina (E913)',
+          'lanolin (E913)',
+          'albúmina/clara de huevo',
+          'egg albumin/egg white',
+          'cola de pescado',
+          'fish glue',
+          'aceite de hígado de bacalao',
+          'cod liver oil',
+          'pepsina',
+          'pepsin',
+          'leche',
+          'milk',
+          'huevo',
+          'egg',
+          'pollo',
+          'chicken',
+          'carne',
+          'meat',
+          'pescado',
+          'fish',
+          'queso',
+          'cheese'
+        ];
+        
+        // VEGANISMO
 
-      if (restricciones.veganismo == true){
-        if (1==1){
-          setApto('false');
-          restr.push('Veganismo');
-        }
+        if (restricciones.includes("Veganismo")){
+            for (let i = 0; i < ingredients.length; i++) {
+              if (noAptoParaVeganos.includes(ingredients[i]))  {
+                setApto(false)
+                break;
+              }
+            }
+            restr.push('Veganismo');
+          }
+        
       }
+      
 
       // VEGETARIANISMO
       // CELIAQUISMO
@@ -112,11 +176,13 @@ const ScanPage = () => {
         nombre : productName,
         imgUrl : imagenUrl,
         nutriscore : nr,
-        restricciones : restr
+        restricciones : restr,
+        apto : apto
       };
 
       console.log(apto);
-      if (apto == 'true'){
+      console.log(restr);
+      if (apto == true){
         navigation.navigate("ProductDataPageAPTO", {dataParaApto});
       } else {
         navigation.navigate("ProductDataPageNOAPTO", {dataParaApto});
@@ -125,15 +191,7 @@ const ScanPage = () => {
     }
   }
 
-  const validarProducto = async (data) => {
-      const response = await fetch(`https://world.openfoodfacts.org/api/v0/product/${data}.json`);
-      const json = await response.json();
-      const productData = json.product; 
-      console.log(productData.product);
-      const ingredients=productData.ingredients;
-  }
-
-  ;
+  
 
   //useIsFocused returns a boolean indicating whether the screen is focused or not
   const viewFocused = useIsFocused();

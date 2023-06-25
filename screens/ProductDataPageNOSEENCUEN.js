@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     left: 34,
     borderRadius: Border.br_3xs,
     backgroundColor: Color.chocolate,
-    width: 299,
+    width: 315,
     height: 75,
     flexDirection: "row",
     padding: Padding.p_3xs,
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   },
   frameParent: {
     top: 689,
-    left: 29,
+    left: 10,
     width: 333,
     height: 84,
     position: "absolute",
