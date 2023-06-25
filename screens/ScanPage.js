@@ -190,10 +190,10 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   wrapper: {
-    left: 147,
-    top: -73,
-    width: 68,
-    height: 68,
+    left: -15,
+    top: -22,
+    width: 80,
+    height: 80,
     position: "absolute",
   },
   iconLayout: {
