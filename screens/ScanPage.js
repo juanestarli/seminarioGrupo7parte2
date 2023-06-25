@@ -81,15 +81,25 @@ const ScanPage = () => {
       const imagenUrl = json.product.image_url;
       const nr = json.product.nutriscore_grade;
       const restr = restricciones;
-      const ingredients = [json.product.ingredients_analysis]
+      const ingredients = json.ingredients_tags;
       console.log(ingredients);
       await AsyncStorage.setItem('nombreProducto', productName);
       const nombreProducto= await AsyncStorage.getItem('nombreProducto');
 
-      setApto(true);
-      verificarIngredientes(ingredients);    
+      setApto(verificarIngredientes(ingredients));
+      
+      
+      
+      function quitarPrefijo(palabra) {
+        if (palabra.length <= 3) {
+          return palabra;
+        }
+        
+        return palabra.substring(3);
+      }
 
       function verificarIngredientes(ingredientes) {
+        let Apto=true;
         const noAptoParaVeganos = [
           'carmín/cochinilla (E120)',
           'carmine/cochineal (E120)',
@@ -149,14 +159,14 @@ const ScanPage = () => {
 
         if (restricciones.includes("Veganismo")){
             for (let i = 0; i < ingredients.length; i++) {
-              if (noAptoParaVeganos.includes(ingredients[i]))  {
-                setApto(false)
+              if (noAptoParaVeganos.includes(quitarPrefijo(ingredients[i])))  {
+                Apto=false;
                 break;
               }
             }
             restr.push('Veganismo');
           }
-        
+        return Apto;
       }
       
 
