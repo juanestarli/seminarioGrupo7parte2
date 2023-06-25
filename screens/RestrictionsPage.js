@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Image } from "expo-image";
-import {StyleSheet,Text,  Switch,  TextInput,  View,  Pressable,} from "react-native";
+import {StyleSheet,Text,  Switch,  TextInput,  View,  Pressable, ScrollView} from "react-native";
 import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast, { DURATION } from 'react-native-easy-toast';
@@ -183,40 +183,21 @@ Restricciones`}</Text>
       <Text
         style={[styles.restriccionesFrecuentes, styles.ingredientesAEvitarTypo]}
       >
-        Restricciones frecuentes
+        Restricciones Frecuentes
       </Text>
       <Text
         style={[styles.ingredientesAEvitar, styles.ingredientesAEvitarTypo]}
       >
-        Ingredientes a evitar
+        Ingredientes a Evitar
       </Text>
       <TextInput
         style={[styles.restrictionsPageChild, styles.restrictionsPageChildTypo]}
-        placeholder="Buscar ingrediente"
+        placeholder="Ingresar ingrediente"
         keyboardType="default"
         placeholderTextColor="rgba(0, 0, 0, 0.4)"
         
       />
-      <View
-        style={[
-          styles.tartrazinaColoranteAmarilloWrapper,
-          styles.wrapperPosition,
-        ]}
-      >
-        <Text
-          style={[
-            styles.tartrazinaColoranteAmarillo,
-            styles.restrictionsPageChildTypo,
-          ]}
-        >
-          Tartrazina (colorante amarillo)
-        </Text>
-      </View>
-      <Image
-        style={[styles.vectorIcon, styles.vectorIconLayout]}
-        contentFit="cover"
-        source={require("../assets/vector.png")}
-      />
+
       <View style={[styles.sorbitolWrapper, styles.wrapperPosition]}>
         <Text
           style={[
@@ -226,12 +207,17 @@ Restricciones`}</Text>
         >
           Sorbitol
         </Text>
+        
       </View>
+
+
+      
       <Image
         style={[styles.vectorIcon1, styles.vectorIconLayout]}
         contentFit="cover"
         source={require("../assets/vector.png")}
       />
+      
 
       <Toast
         ref={toastRef}
@@ -455,6 +441,12 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     left: 31,
     position: "absolute",
+    borderRadius: Border.br_6xl,
+    backgroundColor: Color.white,
+    flexDirection: "row",
+    padding: Padding.p_3xs,
+    fontWeight: "600",
+    fontSize: FontSize.size_xs,
   },
   tartrazinaColoranteAmarillo: {
     alignSelf: "stretch",

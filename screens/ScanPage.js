@@ -53,6 +53,27 @@ const ScanPage = () => {
     getData();
   }, []);
 
+  const agregarAlHistorial = async (producto) => {
+    try {
+      // Obtén el historial actual almacenado en AsyncStorage
+      const historialActual = await AsyncStorage.getItem('productosHistorial');
+      console.log(historialActual)
+  
+      // Agrega el producto al historial
+      historialActual.push(producto);
+  
+      console.log(historialActual)
+      // Actualiza el historial en AsyncStorage
+      await AsyncStorage.setItem('productosHistorial', JSON.stringify(historialActual));
+    } catch (error) {
+      console.log('Error al agregar al historial:', error);
+    }
+  };
+
+  const handleHistorial = (prodHistorial) => {
+    agregarAlHistorial(prodHistorial);
+  };
+
   const handleBarCodeScanned = ({type, data}) => {
     this.camera.pausePreview();
     toastRef.current.show('Procesando código...', DURATION.LENGTH_LONG);
@@ -190,8 +211,17 @@ const ScanPage = () => {
         apto : apto
       };
 
-      console.log(apto);
-      console.log(restr);
+      // Lo agrego al historial
+
+      const prodHistorial = {
+        nombre : productName,
+        imgUrl : imagenUrl,
+        nutriscore : nr
+      };
+
+      console.log(prodHistorial)
+      // arreglar lo de agregar, lo saque pq tiraba error
+
       if (apto == true){
         navigation.navigate("ProductDataPageAPTO", {dataParaApto});
       } else {

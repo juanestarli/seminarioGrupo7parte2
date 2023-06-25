@@ -114,8 +114,24 @@ const App = () => {
         const restricciones = [];
         const jsonString = JSON.stringify(restricciones);
         await AsyncStorage.setItem('restricciones', jsonString);
+
       } catch (error) {
         console.log('Error al guardar las restricciones:', error);
+      }
+    };
+
+    saveData();
+  }, []);
+
+  useEffect(() => {
+    // Guardo el historial cuando se abre la aplicación
+    const saveData = async () => {
+      try {
+        const productosHistorial = [];
+        const jsonString2 = JSON.stringify(productosHistorial);
+        await AsyncStorage.setItem('productosHistorial', jsonString2);
+      } catch (error) {
+        console.log('Error al guardar el historial:', error);
       }
     };
 

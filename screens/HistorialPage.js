@@ -10,71 +10,71 @@ import {
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { Border, Color, FontSize, FontFamily } from "../GlobalStyles";
+import { useState, useEffect, useRef } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HistorialPage = () => {
   const navigation = useNavigation();
 
+  const [productosHistorial, setProductosHistorial] = useState([]);
+
+  useEffect(() => {
+    // Ejemplo de cómo recuperar un objeto JSON de AsyncStorage
+    const getData = async () => {
+      try {
+        const jsonString = await AsyncStorage.getItem('productosHistorial');
+        const data = JSON.parse(jsonString);
+        setProductosHistorial(data);
+        console.log('Historial recuperado:', data);
+      } catch (error) {
+        console.log('Error al recuperar el historial:', error);
+      }
+    };
+
+    getData();
+  }, []);
+
   return (
     <View style={styles.historialPage}>
       <StatusBar style={styles.wrapperPosition} barStyle="default" />
-      <ScrollView
-        style={styles.tarjetaParent}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.frameScrollViewContent}
-      >
-        <Pressable
-          style={styles.tarjeta}
-          onPress={() => navigation.navigate("ProductDataPageAPTO")}
-        >
-          <View style={[styles.tarjetaChild, styles.image5IconLayout]} />
-          <Image
-            style={[styles.image5Icon, styles.image5IconLayout]}
-            contentFit="cover"
-            source={require("../assets/image-5.png")}
-          />
-          <Text style={styles.milanesaDeSoja}>
-            MILANESA DE SOJA - VEGETALÉX
-          </Text>
-        </Pressable>
-        <View style={styles.tarjetaShadowBox}>
-          <View style={[styles.tarjetaChild, styles.image5IconLayout]} />
-          <Image
-            style={[styles.image5Icon, styles.image5IconLayout]}
-            contentFit="cover"
-            source={require("../assets/image-5.png")}
-          />
-          <Text style={styles.milanesaDeSoja}>
-            MILANESA DE SOJA - GRANJA DEL SOL
-          </Text>
-        </View>
-        <View style={styles.tarjetaShadowBox}>
-          <View style={[styles.tarjetaChild, styles.image5IconLayout]} />
-          <Image
-            style={[styles.image5Icon, styles.image5IconLayout]}
-            contentFit="cover"
-            source={require("../assets/image-5.png")}
-          />
-          <Text style={styles.milanesaDeSoja}>MILANESA DE SOJA - LUCHETTI</Text>
-        </View>
-        <View style={styles.tarjetaShadowBox}>
-          <View style={[styles.tarjetaChild, styles.image5IconLayout]} />
-          <Image
-            style={[styles.image5Icon, styles.image5IconLayout]}
-            contentFit="cover"
-            source={require("../assets/image-5.png")}
-          />
-          <Text style={styles.milanesaDeSoja}>MILANESA DE SOJA - SWIFT</Text>
-        </View>
-        <View style={styles.tarjetaShadowBox}>
-          <View style={[styles.tarjetaChild, styles.image5IconLayout]} />
-          <Image
-            style={[styles.image5Icon, styles.image5IconLayout]}
-            contentFit="cover"
-            source={require("../assets/image-5.png")}
-          />
-          <Text style={styles.milanesaDeSoja}>MILANESA DE SOJA - DÍA</Text>
-        </View>
+      <View style={{ top: 230, left: 30, height: 540, overflow: 'scroll' }}>
+      <ScrollView contentContainerStyle={{ paddingVertical: 0 }}>
+
+        {productosHistorial != null &&  productosHistorial.length !== 0 ? (
+
+        productosHistorial.map((producto, index) =>
+
+            <Pressable
+              key={index}
+              style={styles.tarjetaShadowBox}
+              onPress={() => handlePress(index)}
+            >
+
+            <View style={[styles.tarjetaChild, styles.image5IconLayout]} />
+            {producto.image_url ? (
+                <Image source={{ uri: producto.image_url }} style={[styles.image5Icon, styles.image5IconLayout]} contentFit="cover" />
+              ) : (
+                <></>
+            )}
+
+            {producto.product_name ? (
+                <Text style={[styles.milanesaDeSoja, styles.timeClr]}>
+                  {producto.product_name}
+                </Text>
+              ) : (
+                <></>
+            )}
+
+            </Pressable>
+
+            )
+
+        ) : <Text style={{left: 65}}>
+        No tiene productos en el historial.
+      </Text>}
+        
       </ScrollView>
+      </View>
       <Image
         style={styles.historialPageChild}
         contentFit="cover"
@@ -118,6 +118,11 @@ const styles = StyleSheet.create({
     backgroundColor: Color.darkorange,
     height: "100%",
     width: "100%",
+  },
+  timeClr: {
+    color: Color.black,
+    textAlign: "center",
+    position: "absolute",
   },
   image5Icon: {
     height: "78.13%",
@@ -179,7 +184,7 @@ const styles = StyleSheet.create({
   },
   historialPageChild: {
     top: 72,
-    left: 145,
+    left: 150,
     width: 100,
     height: 85,
     position: "absolute",
