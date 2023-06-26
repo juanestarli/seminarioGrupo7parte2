@@ -15,6 +15,7 @@ const RestrictionsPage = () => {
   const [vegetarianismo, setVegetarianismo] = useState(false);
 
   const [restricciones, setRestricciones] = useState([]);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   const toastRef = useRef(null);
   const handleSend = () => {
@@ -22,7 +23,50 @@ const RestrictionsPage = () => {
   };
 
   useEffect(() => {
-    actualizarRestricciones();
+    // Ejemplo de cómo recuperar un objeto JSON de AsyncStorage
+    const getData = async () => {
+      try {
+        const jsonString = await AsyncStorage.getItem('restricciones');
+        const data = JSON.parse(jsonString) || [];
+
+        if (data.includes('Celiaquismo')){
+          setCeliaquismo(true);
+        }
+        if (data.includes('Diabetes')){
+          setDiabetes(true);
+        }
+        if (data.includes('Dieta baja en Colesterol')){
+          setBajoColesterol(true);
+        }
+        if (data.includes('Hipertensión')){
+          setHipertension(true);
+        }
+        if (data.includes('Intolerancia a la Lactosa')){
+          setIntoleranciaLactosa(true);
+        }
+        if (data.includes('Veganismo')){
+          setVeganismo(true);
+        }
+        if (data.includes('Vegetarianismo')){
+          setVegetarianismo(true);
+        }
+
+        setRestricciones(data);
+        console.log('Restricciones recuperadas:', data);
+        setIsDataLoaded(true);
+        
+      } catch (error) {
+        console.log('Error al recuperar las restricciones:', error);
+      }
+    };
+
+    getData();
+  }, []);
+
+  useEffect(() => {
+    if (isDataLoaded){
+      actualizarRestricciones();
+    }
   }, [celiaquismo, diabetes, bajoColesterol, hipertension, intoleranciaLactosa, veganismo, vegetarianismo]);
 
   const actualizarRestricciones = () => {
@@ -40,35 +84,19 @@ const RestrictionsPage = () => {
     setRestricciones(nuevasRestricciones);
 
     console.log('Restricciones actualizadas:', nuevasRestricciones);
+
+    agregarRestriccion(nuevasRestricciones);
+
   };
 
-  useEffect(() => {
-    const saveData = async () => {
-      try {
-        await AsyncStorage.setItem('restricciones', JSON.stringify(restricciones));
-      } catch (error) {
-        console.log('Error al actualizar las restricciones:', error);
-      }
-    };
-  
-    saveData();
-  }, [restricciones]);
-
-  useEffect(() => {
-    // Ejemplo de cómo recuperar un objeto JSON de AsyncStorage
-    const getData = async () => {
-      try {
-        const jsonString = await AsyncStorage.getItem('restricciones');
-        const data = JSON.parse(jsonString);
-        setRestricciones(data);
-        console.log('Restricciones recuperadas:', data);
-      } catch (error) {
-        console.log('Error al recuperar las restricciones:', error);
-      }
-    };
-
-    getData();
-  }, []);
+  const agregarRestriccion = async (p) => {
+    try { 
+      // Actualiza las restricciones en AsyncStorage
+      await AsyncStorage.setItem('restricciones', JSON.stringify(p));
+    } catch (error) {
+      console.log('Error al agregar al historial:', error);
+    }
+  };
 
   const cambiarCeliaquismo = (value) => {
     setCeliaquismo(value);
@@ -198,25 +226,11 @@ Restricciones`}</Text>
         
       />
 
-      <View style={[styles.sorbitolWrapper, styles.wrapperPosition]}>
-        <Text
-          style={[
-            styles.tartrazinaColoranteAmarillo,
-            styles.restrictionsPageChildTypo,
-          ]}
-        >
-          Sorbitol
-        </Text>
-        
-      </View>
+      
 
 
       
-      <Image
-        style={[styles.vectorIcon1, styles.vectorIconLayout]}
-        contentFit="cover"
-        source={require("../assets/vector.png")}
-      />
+      
       
 
       <Toast

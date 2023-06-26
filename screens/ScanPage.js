@@ -6,7 +6,7 @@ import {useIsFocused} from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast, { DURATION } from 'react-native-easy-toast';
-
+import { Padding, FontFamily, FontSize, Color, Border } from "../GlobalStyles";
 
 const ScanPage = () => {
   const navigation = useNavigation();
@@ -261,6 +261,7 @@ const ScanPage = () => {
         style={{ backgroundColor: 'gray', position: 'absolute', top: 100 }}
         position="top"
       />
+      <Text style={styles.tituloCamara}>ESCANEE EL CÓDIGO DE BARRAS</Text>
    </View>
    
    
@@ -296,6 +297,16 @@ const styles = StyleSheet.create({
   iconLayout: {
     height: "100%",
     width: "100%",
+  },
+  tituloCamara: {
+    top: -50,
+    left: -15,
+    fontSize: FontSize.size_lg,
+    fontFamily: FontFamily.workSansBold,
+    justifyContent: "center",
+    width: 400,
+    textAlign: "center",
+    position: "absolute",
   },
 });
 

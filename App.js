@@ -49,14 +49,14 @@ function BottomTabsRoot({ navigation }) {
   ]);
   return (
     <Tab.Navigator
-      screenOptions={{ headerShown: false }}
+      screenOptions={{ headerShown: false, unmountOnBlur: true }}
       initialRouteName="HomePage"
       tabBar={({ state, descriptors, navigation }) => {
         const activeIndex = state.index;
         return (
           <View
             style={{
-              width: 390,
+              width: 398,
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-evenly",

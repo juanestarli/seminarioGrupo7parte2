@@ -41,6 +41,19 @@ const HistorialPage = () => {
 
   }, [productosHistorial]);
 
+  const handlePress = (index) => {
+    const prod = productosHistorial[index];
+
+    console.log(prod.nombre)
+    const dataParaApto = {
+      nombre : prod.nombre,
+      imgUrl : prod.imgUrl,
+      nr : prod.nutriscore,
+    };
+
+    navigation.navigate("Nutriscore", {dataParaApto});
+  };
+
 
   return (
     <View style={styles.historialPage}>

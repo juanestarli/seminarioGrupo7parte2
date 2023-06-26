@@ -11,6 +11,8 @@ import { useNavigation } from "@react-navigation/native";
 import { Color, Border, FontFamily, FontSize, Padding } from "../GlobalStyles";
 import React,{useState, useEffect} from 'react';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const ProductSearchPage = () => {
   const navigation = useNavigation();
@@ -25,6 +27,28 @@ const ProductSearchPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [textBusqueda, setTextBusqueda] = useState('')
   const [inputValue, setInputValue] = useState('');
+
+  const agregarAlHistorial = async (p) => {
+    try {
+      // Obtén el historial actual almacenado en AsyncStorage
+      const historialActual = await AsyncStorage.getItem('productosHistorial');
+      const historialArray = JSON.parse(historialActual) || [];
+  
+      // Agrega el producto al historial
+      historialArray.push(p);
+
+      console.log(historialArray)
+  
+      // Actualiza el historial en AsyncStorage
+      await AsyncStorage.setItem('productosHistorial', JSON.stringify(historialArray));
+    } catch (error) {
+      console.log('Error al agregar al historial:', error);
+    }
+  };
+
+  const handleHistorial = (p) => {
+    agregarAlHistorial(p);
+  };
 
   const handleBlur = () => {
     setTextBusqueda('Buscando...');
@@ -64,13 +88,14 @@ const ProductSearchPage = () => {
 
   const handlePress = (index) => {
     const prod = productos[index];
-
-    console.log(prod.product_name)
+    
     const dataParaApto = {
       nombre : prod.product_name,
       imgUrl : prod.image_url,
       nr : prod.nutriscore_grade,
     };
+
+    handleHistorial(dataParaApto);
 
     navigation.navigate("Nutriscore", {dataParaApto});
   };
