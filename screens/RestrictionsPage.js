@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Image } from "expo-image";
-import {StyleSheet,Text,  Switch,  TextInput,  View,  Pressable, ScrollView} from "react-native";
+import {StyleSheet,Text,  Switch,  TextInput,  View,  Pressable, ScrollView, KeyboardAvoidingView} from "react-native";
 import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast, { DURATION } from 'react-native-easy-toast';
@@ -16,6 +16,13 @@ const RestrictionsPage = () => {
 
   const [restricciones, setRestricciones] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+
+  const [inputValue, setInputValue] = useState('');
+
+  const [productosIngredientes, setProductosIngredientes] = useState([]);
+  const [isDataLoaded2, setIsDataLoaded2] = useState(false);
+
+  const toastRef2 = useRef(null);
 
   const toastRef = useRef(null);
   const handleSend = () => {
@@ -64,6 +71,25 @@ const RestrictionsPage = () => {
   }, []);
 
   useEffect(() => {
+    // Ejemplo de cómo recuperar un objeto JSON de AsyncStorage
+    const getData = async () => {
+      try {
+        const jsonString = await AsyncStorage.getItem('ingredientes');
+        const data = JSON.parse(jsonString) || [];
+
+        setProductosIngredientes(data);
+        console.log('Ingredientes recuperados:', data);
+        setIsDataLoaded2(true);
+        
+      } catch (error) {
+        console.log('Error al recuperar los ingredientes:', error);
+      }
+    };
+
+    getData();
+  }, []);
+
+  useEffect(() => {
     if (isDataLoaded){
       actualizarRestricciones();
     }
@@ -97,6 +123,40 @@ const RestrictionsPage = () => {
       console.log('Error al agregar al historial:', error);
     }
   };
+
+  this.myTextInput = React.createRef();
+
+  const agregarIngrediente = async (p) => {
+    try { 
+      const newArray = [...productosIngredientes, p];
+      productosIngredientes.push(p);
+
+
+      setProductosIngredientes(newArray);
+      await AsyncStorage.setItem('ingredientes', JSON.stringify(productosIngredientes));
+    } catch (error) {
+      console.log('Error al agregar ingrediente:', error);
+    }
+  };
+
+  function pressEnviar() {
+    console.log(inputValue)
+    agregarIngrediente(inputValue);
+    this.myTextInput.current.clear(); 
+    this.myTextInput.current.blur();
+    handleSend2();
+  }
+
+  
+  const handleSend2 = () => {
+    toastRef2.current.show('Ingrediente agregado correctamente.', DURATION.LENGTH_LONG);
+  };
+
+  const handleImagePress = (index) => {
+    console.log('press')
+  };
+
+  
 
   const cambiarCeliaquismo = (value) => {
     setCeliaquismo(value);
@@ -219,22 +279,55 @@ Restricciones`}</Text>
         Ingredientes a Evitar
       </Text>
       <TextInput
+        ref={this.myTextInput}
         style={[styles.restrictionsPageChild, styles.restrictionsPageChildTypo]}
         placeholder="Ingresar ingrediente"
         keyboardType="default"
         placeholderTextColor="rgba(0, 0, 0, 0.4)"
+        onBlur={() =>  pressEnviar()}
+        onChangeText={setInputValue}
         
       />
 
-      
+    <View style={{ top: 590, left: 37, height: 100, overflow: 'scroll' }}>
+      <ScrollView contentContainerStyle={{ paddingVertical: 0, }}>
 
+        {productosIngredientes != null &&  productosIngredientes.length !== 0 ? (
+          
+          productosIngredientes.map((producto, index) =>
+          
+          <View key={index} >
 
-      
-      
-      
+          <Pressable key={index} onPress={() => handleImagePress(index)} style={[styles.vectorIcon1, styles.vectorIconLayout, { position: 'absolute', top: 0, right: 0 }]}>
+          <Image
+              style={[styles.vectorIcon1, styles.vectorIconLayout, { position: 'absolute', top: 13, right: 20 }]}
+              contentFit="cover"
+              source={require("../assets/vector.png")}
+              
+          />
+          </Pressable>
+          <Text
+            style={[styles.tartrazinaColoranteAmarillo, styles.restrictionsPageChildTypo]}>
+            {'- ' + producto}
+          </Text>
+          
+
+          </View>
+
+            )
+
+        ) : <></>}
+        
+      </ScrollView>
+    </View>
 
       <Toast
         ref={toastRef}
+        style={{ backgroundColor: 'gray', position: 'absolute', top: 30 }}
+        position="top"
+      />
+      <Toast
+        ref={toastRef2}
         style={{ backgroundColor: 'gray', position: 'absolute', top: 30 }}
         position="top"
       />
@@ -311,7 +404,6 @@ const styles = StyleSheet.create({
   vectorIconLayout: {
     height: 16,
     width: 16,
-    left: 326,
     position: "absolute",
   },
   timePosition: {
@@ -480,7 +572,7 @@ const styles = StyleSheet.create({
     top: 613,
   },
   sorbitolWrapper: {
-    top: 661,
+    top: 600,
   },
   vectorIcon1: {
     top: 674,

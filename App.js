@@ -32,11 +32,14 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { useState, useEffect, useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useKeyboard } from 'react-native-hooks';
 
 import { ToastProvider } from 'react-native-toast-message';
 
 const Tab = createBottomTabNavigator();
 function BottomTabsRoot({ navigation }) {
+
+
   const [bottomTabItemsNormal] = React.useState([
     <IconUser />,
     <IconHome2 />,
@@ -47,6 +50,7 @@ function BottomTabsRoot({ navigation }) {
     <IconHome21 />,
     <IconBookSaved1 />,
   ]);
+
   return (
     <Tab.Navigator
       screenOptions={{ headerShown: false, unmountOnBlur: true }}
@@ -117,6 +121,22 @@ const App = () => {
 
       } catch (error) {
         console.log('Error al guardar las restricciones:', error);
+      }
+    };
+
+    saveData();
+  }, []);
+
+  useEffect(() => {
+    // Guardo los ingredientes HARDCODEADAS cuando se abre la aplicación
+    const saveData = async () => {
+      try {
+        const ingredientes = ['Harina', 'Azúcar', 'Glucosa'];
+        const jsonString = JSON.stringify(ingredientes);
+        await AsyncStorage.setItem('ingredientes', jsonString);
+
+      } catch (error) {
+        console.log('Error al guardar los ingredientes:', error);
       }
     };
 
