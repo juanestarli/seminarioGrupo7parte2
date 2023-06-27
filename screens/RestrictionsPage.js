@@ -152,11 +152,25 @@ const RestrictionsPage = () => {
     toastRef2.current.show('Ingrediente agregado correctamente.', DURATION.LENGTH_LONG);
   };
 
-  const handleImagePress = (index) => {
-    console.log('press')
+  const handleSend3 = () => {
+    toastRef2.current.show('Ingrediente eliminado correctamente.', DURATION.LENGTH_LONG);
   };
 
-  
+  const handleImagePress = (index) => {
+    eliminarIngrediente(index);
+    handleSend3();
+  };
+
+  const eliminarIngrediente = async (indexToRemove) => {
+    try { 
+      const newArray = productosIngredientes.filter((_, index) => index !== indexToRemove);
+
+      setProductosIngredientes(newArray);
+      await AsyncStorage.setItem('ingredientes', JSON.stringify(newArray));
+    } catch (error) {
+      console.log('Error al agregar ingrediente:', error);
+    }
+  };
 
   const cambiarCeliaquismo = (value) => {
     setCeliaquismo(value);
@@ -289,30 +303,34 @@ Restricciones`}</Text>
         
       />
 
-    <View style={{ top: 590, left: 37, height: 100, overflow: 'scroll' }}>
-      <ScrollView contentContainerStyle={{ paddingVertical: 0, }}>
+    <View style={{ top: 600, left: 37, height: 100, overflow: 'scroll', width: 315 }}>
+      <ScrollView contentContainerStyle={{ paddingVertical: 0}}>
 
         {productosIngredientes != null &&  productosIngredientes.length !== 0 ? (
           
           productosIngredientes.map((producto, index) =>
           
-          <View key={index} >
+          <View key={index} style={{ height: 30, marginBottom: 10, backgroundColor: Color.sandybrown, borderRadius: 10 }}>
+
+          
+          <Text
+            style={[styles.tartrazinaColoranteAmarillo, styles.restrictionsPageChildTypo]}>
+            {producto}
+          </Text>
 
           <Pressable key={index} onPress={() => handleImagePress(index)} style={[styles.vectorIcon1, styles.vectorIconLayout, { position: 'absolute', top: 0, right: 0 }]}>
           <Image
-              style={[styles.vectorIcon1, styles.vectorIconLayout, { position: 'absolute', top: 13, right: 20 }]}
+              style={[styles.vectorIcon1, styles.vectorIconLayout, { position: 'absolute', top: 7, right: 8 }]}
               contentFit="cover"
               source={require("../assets/vector.png")}
               
           />
           </Pressable>
-          <Text
-            style={[styles.tartrazinaColoranteAmarillo, styles.restrictionsPageChildTypo]}>
-            {'- ' + producto}
-          </Text>
           
 
           </View>
+
+          
 
             )
 
@@ -559,6 +577,8 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     width: 255,
+    top: 3,
+    left: 10,
     textAlign: "left",
     fontSize: FontSize.size_base,
     color: Color.black,
