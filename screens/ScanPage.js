@@ -125,6 +125,16 @@ const ScanPage = () => {
       setApto(true);
       
 >>>>>>> d095abcc2e46f487798024883764c67538f80918
+=======
+      const ingredients = json.ingredients_tags;
+      const nutrient_levels = json.product.nutrient_levels;
+      console.log(nutrient_levels);
+      //await AsyncStorage.setItem('nombreProducto', productName);
+      //const nombreProducto= await AsyncStorage.getItem('nombreProducto');
+
+      setApto(true);
+      
+>>>>>>> d095abcc2e46f487798024883764c67538f80918
       
       
       
