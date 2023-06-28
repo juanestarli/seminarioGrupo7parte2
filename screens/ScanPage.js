@@ -103,6 +103,7 @@ const ScanPage = () => {
       const nr = json.product.nutriscore_grade;
       const restr = restricciones;
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (json.product.ingredients_tags) {
         const ingredients = json.product.ingredients_tags;
         const listaIngredients = Array.isArray(ingredients) ? ingredients : [ingredients];
