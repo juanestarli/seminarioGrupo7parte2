@@ -242,7 +242,8 @@ const ScanPage = () => {
             imgUrl : imagenUrl,
             nutriscore : nr,
             restricciones : restr,
-            apto : false
+            apto : false,
+            nutrient_levels: nutrient_levels
           };
   
           navigation.navigate("ProductDataPageNOAPTO", {dataParaApto});
@@ -254,7 +255,8 @@ const ScanPage = () => {
             imgUrl : imagenUrl,
             nutriscore : nr,
             restricciones : restr,
-            apto : true
+            apto : true,
+            nutrient_levels: nutrient_levels
           };
   
           navigation.navigate("ProductDataPageAPTO", {dataParaApto});
@@ -268,7 +270,8 @@ const ScanPage = () => {
           imgUrl : imagenUrl,
           nutriscore : nr,
           restricciones : restr,
-          apto : true
+          apto : true,
+          nutrient_levels: nutrient_levels
         };
 
         navigation.navigate("ProductDataPageAPTO", {dataParaApto});
