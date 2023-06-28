@@ -103,11 +103,13 @@ const ScanPage = () => {
       const nr = json.product.nutriscore_grade;
       const restr = restricciones;
       const ingredients = json.ingredients_tags;
-      console.log(ingredients);
+      const nutrient_levels = json.product.nutrient_levels;
+      console.log(nutrient_levels);
       //await AsyncStorage.setItem('nombreProducto', productName);
       //const nombreProducto= await AsyncStorage.getItem('nombreProducto');
 
-      setApto(verificarIngredientes(ingredients));
+      setApto(true);
+      
       
       
       
@@ -208,7 +210,8 @@ const ScanPage = () => {
         imgUrl : imagenUrl,
         nutriscore : nr,
         restricciones : restr,
-        apto : apto
+        apto : apto,
+        nutrient_levels: nutrient_levels
       };
 
       // Lo agrego al historial
@@ -216,7 +219,8 @@ const ScanPage = () => {
       const prodHistorialOk = {
         nombre : productName,
         imgUrl : imagenUrl,
-        nutriscore : nr
+        nutriscore : nr,
+        nutrient_levels: nutrient_levels
       };
 
       handleHistorial(prodHistorialOk);
@@ -299,7 +303,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   tituloCamara: {
-    top: -50,
+    top: -35,
     left: -15,
     fontSize: FontSize.size_lg,
     fontFamily: FontFamily.workSansBold,
