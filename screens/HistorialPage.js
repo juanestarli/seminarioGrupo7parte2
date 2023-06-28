@@ -45,10 +45,12 @@ const HistorialPage = () => {
     const prod = productosHistorial[index];
 
     console.log(prod.nombre)
+   
     const dataParaApto = {
       nombre : prod.nombre,
       imgUrl : prod.imgUrl,
       nr : prod.nutriscore,
+      nutrient_levels : prod.nutrient_levels
     };
 
     navigation.navigate("Nutriscore", {dataParaApto});
@@ -76,6 +78,14 @@ const HistorialPage = () => {
                 <Image source={{ uri: producto.imgUrl }} style={[styles.image5Icon, styles.image5IconLayout]} contentFit="cover" />
               ) : (
                 <></>
+            )}
+            {producto.nr ? (
+            <ImageBackground
+            style={styles.image14Icon}
+            resizeMode="cover"
+            source={nutriscoreImages[dataParaApto.nutriscore]}
+            />        ) : (
+              <></>
             )}
 
             {producto.nombre ? (

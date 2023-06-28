@@ -93,6 +93,7 @@ const ProductSearchPage = () => {
       nombre : prod.product_name,
       imgUrl : prod.image_url,
       nr : prod.nutriscore_grade,
+      nutrient_levels: prod.nutrient_levels
     };
 
     handleHistorial(dataParaApto);

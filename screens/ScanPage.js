@@ -103,27 +103,45 @@ const ScanPage = () => {
       const nr = json.product.nutriscore_grade;
       const restr = restricciones;
       const ingredients = json.ingredients_tags;
-      console.log(ingredients);
+      const nutrient_levels = json.product.nutrient_levels;
+      console.log(nutrient_levels);
+      
+
+      await AsyncStorage.setItem('nombreProducto', productName);
+      const nombreProducto= await AsyncStorage.getItem('nombreProducto');
+
+      
+    
+
+      
+      //await AsyncStorage.setItem('nombreProducto', productName);
+      //const nombreProducto= await AsyncStorage.getItem('nombreProducto');
       //await AsyncStorage.setItem('nombreProducto', productName);
       //const nombreProducto= await AsyncStorage.getItem('nombreProducto');
 
 
-
       
+
 
       //setApto(verificarIngredientes(ingredients));
       
       
+
       
-      /*function quitarPrefijo(palabra) {
+      function quitarPrefijo(palabra) {
         if (palabra.length <= 3) {
           return palabra;
         }
         
         return palabra.substring(3);
+
+      function quitarPrefijo(palabra) {
+        console.log(String(palabra));
+        return String(palabra).substring(3);
+      }
       }
 
-      function verificarIngredientes(ingredientes) {
+      function verificarIngredientes(listaIngredients) {
         let Apto=true;
         const noAptoParaVeganos = [
           'carmín/cochinilla (E120)',
@@ -179,17 +197,17 @@ const ScanPage = () => {
           'queso',
           'cheese'
         ];
+
+      }
         
         // VEGANISMO
-
+        /*
         if (restricciones.includes("Veganismo")){
-            for (let i = 0; i < ingredients.length; i++) {
-              if (noAptoParaVeganos.includes(quitarPrefijo(ingredients[i])))  {
-                Apto=false;
-                break;
-              }
+          listaIngredients.forEach(ingredient => {
+            if (noAptoParaVeganos.includes(quitarPrefijo(ingredient)))  {
+              Apto=false;
             }
-            restr.push('Veganismo');
+          });
           }
         return Apto;
       }*/
@@ -212,23 +230,39 @@ const ScanPage = () => {
         imgUrl : imagenUrl,
         nutriscore : nr,
         restricciones : restr,
-        apto : apto
+        apto : apto,
+        nutrient_levels: nutrient_levels
       };
 
-      if (data == 7790742373304){
+      if (restr.includes("Intolerancia a la Lactosa")){
+        if (data == 7790742373304){
 
-        const dataParaApto = {
-          nombre : productName,
-          imgUrl : imagenUrl,
-          nutriscore : nr,
-          restricciones : restr,
-          apto : false
-        };
-
-        navigation.navigate("ProductDataPageNOAPTO", {dataParaApto});
-
-      } else if (data == 7790895068096){
-
+          const dataParaApto = {
+            nombre : productName,
+            imgUrl : imagenUrl,
+            nutriscore : nr,
+            restricciones : restr,
+            apto : false
+          };
+  
+          navigation.navigate("ProductDataPageNOAPTO", {dataParaApto});
+  
+        } else if (data == 7790895068096){
+  
+          const dataParaApto = {
+            nombre : 'Coca Cola sin Azúcares',
+            imgUrl : imagenUrl,
+            nutriscore : nr,
+            restricciones : restr,
+            apto : true
+          };
+  
+          navigation.navigate("ProductDataPageAPTO", {dataParaApto});
+  
+        } else {
+          navigation.navigate("ProductDataPageNOSEENCUEN");
+        }
+      } else {
         const dataParaApto = {
           nombre : productName,
           imgUrl : imagenUrl,
@@ -238,17 +272,17 @@ const ScanPage = () => {
         };
 
         navigation.navigate("ProductDataPageAPTO", {dataParaApto});
-
-      } else {
-        navigation.navigate("ProductDataPageNOSEENCUEN");
       }
+
+      
 
       // Lo agrego al historial
 
       const prodHistorialOk = {
         nombre : productName,
         imgUrl : imagenUrl,
-        nutriscore : nr
+        nutriscore : nr,
+        nutrient_levels: nutrient_levels
       };
 
       handleHistorial(prodHistorialOk);
@@ -331,7 +365,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   tituloCamara: {
-    top: -50,
+    top: -35,
     left: -15,
     fontSize: FontSize.size_lg,
     fontFamily: FontFamily.workSansBold,

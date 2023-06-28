@@ -356,7 +356,7 @@ Restricciones`}</Text>
 
 const styles = StyleSheet.create({
   timeClr: {
-    color: Color.black,
+    color: Color.seagreen,
     textAlign: "center",
   },
   diabetesTypo: {
@@ -454,11 +454,12 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   misRestricciones: {
-    top: 40,
+    top: 50,
     left: 94,
     fontSize: FontSize.size_13xl,
     fontWeight: '900',
     fontFamily: FontFamily.interBlack,
+    color: Color.seagreen,
     
     position: "absolute",
   },
