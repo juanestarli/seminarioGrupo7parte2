@@ -107,11 +107,15 @@ const ScanPage = () => {
       //await AsyncStorage.setItem('nombreProducto', productName);
       //const nombreProducto= await AsyncStorage.getItem('nombreProducto');
 
-      setApto(verificarIngredientes(ingredients));
+
+
+      
+
+      //setApto(verificarIngredientes(ingredients));
       
       
       
-      function quitarPrefijo(palabra) {
+      /*function quitarPrefijo(palabra) {
         if (palabra.length <= 3) {
           return palabra;
         }
@@ -188,7 +192,7 @@ const ScanPage = () => {
             restr.push('Veganismo');
           }
         return Apto;
-      }
+      }*/
       
 
       // VEGETARIANISMO
@@ -211,6 +215,34 @@ const ScanPage = () => {
         apto : apto
       };
 
+      if (data == 7790742373304){
+
+        const dataParaApto = {
+          nombre : productName,
+          imgUrl : imagenUrl,
+          nutriscore : nr,
+          restricciones : restr,
+          apto : false
+        };
+
+        navigation.navigate("ProductDataPageNOAPTO", {dataParaApto});
+
+      } else if (data == 7790895068096){
+
+        const dataParaApto = {
+          nombre : productName,
+          imgUrl : imagenUrl,
+          nutriscore : nr,
+          restricciones : restr,
+          apto : true
+        };
+
+        navigation.navigate("ProductDataPageAPTO", {dataParaApto});
+
+      } else {
+        navigation.navigate("ProductDataPageNOSEENCUEN");
+      }
+
       // Lo agrego al historial
 
       const prodHistorialOk = {
@@ -221,11 +253,11 @@ const ScanPage = () => {
 
       handleHistorial(prodHistorialOk);
 
-      if (apto == true){
+      /*if (apto == true){
         navigation.navigate("ProductDataPageAPTO", {dataParaApto});
       } else {
         navigation.navigate("ProductDataPageNOAPTO", {dataParaApto});
-      }
+      }*/
 
     }
   }

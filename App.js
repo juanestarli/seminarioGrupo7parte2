@@ -131,7 +131,7 @@ const App = () => {
     // Guardo los ingredientes HARDCODEADAS cuando se abre la aplicación
     const saveData = async () => {
       try {
-        const ingredientes = ['Harina', 'Azúcar', 'Glucosa'];
+        const ingredientes = [];
         const jsonString = JSON.stringify(ingredientes);
         await AsyncStorage.setItem('ingredientes', jsonString);
 
