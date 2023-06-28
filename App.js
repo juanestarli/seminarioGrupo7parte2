@@ -32,11 +32,14 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { useState, useEffect, useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useKeyboard } from 'react-native-hooks';
 
 import { ToastProvider } from 'react-native-toast-message';
 
 const Tab = createBottomTabNavigator();
 function BottomTabsRoot({ navigation }) {
+
+
   const [bottomTabItemsNormal] = React.useState([
     <IconUser />,
     <IconHome2 />,
@@ -47,16 +50,17 @@ function BottomTabsRoot({ navigation }) {
     <IconHome21 />,
     <IconBookSaved1 />,
   ]);
+
   return (
     <Tab.Navigator
-      screenOptions={{ headerShown: false }}
+      screenOptions={{ headerShown: false, unmountOnBlur: true }}
       initialRouteName="HomePage"
       tabBar={({ state, descriptors, navigation }) => {
         const activeIndex = state.index;
         return (
           <View
             style={{
-              width: 390,
+              width: 398,
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-evenly",
@@ -114,8 +118,40 @@ const App = () => {
         const restricciones = [];
         const jsonString = JSON.stringify(restricciones);
         await AsyncStorage.setItem('restricciones', jsonString);
+
       } catch (error) {
         console.log('Error al guardar las restricciones:', error);
+      }
+    };
+
+    saveData();
+  }, []);
+
+  useEffect(() => {
+    // Guardo los ingredientes HARDCODEADAS cuando se abre la aplicación
+    const saveData = async () => {
+      try {
+        const ingredientes = ['Harina', 'Azúcar', 'Glucosa'];
+        const jsonString = JSON.stringify(ingredientes);
+        await AsyncStorage.setItem('ingredientes', jsonString);
+
+      } catch (error) {
+        console.log('Error al guardar los ingredientes:', error);
+      }
+    };
+
+    saveData();
+  }, []);
+
+  useEffect(() => {
+    // Guardo el historial cuando se abre la aplicación
+    const saveData = async () => {
+      try {
+        const productosHistorial = [];
+        const jsonString2 = JSON.stringify(productosHistorial);
+        await AsyncStorage.setItem('productosHistorial', jsonString2);
+      } catch (error) {
+        console.log('Error al guardar el historial:', error);
       }
     };
 

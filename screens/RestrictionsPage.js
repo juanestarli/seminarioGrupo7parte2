@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Image } from "expo-image";
-import {StyleSheet,Text,  Switch,  TextInput,  View,  Pressable,} from "react-native";
+import {StyleSheet,Text,  Switch,  TextInput,  View,  Pressable, ScrollView, KeyboardAvoidingView} from "react-native";
 import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast, { DURATION } from 'react-native-easy-toast';
@@ -15,6 +15,14 @@ const RestrictionsPage = () => {
   const [vegetarianismo, setVegetarianismo] = useState(false);
 
   const [restricciones, setRestricciones] = useState([]);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
+  const [inputValue, setInputValue] = useState('');
+
+  const [productosIngredientes, setProductosIngredientes] = useState([]);
+  const [isDataLoaded2, setIsDataLoaded2] = useState(false);
+
+  const toastRef2 = useRef(null);
 
   const toastRef = useRef(null);
   const handleSend = () => {
@@ -22,7 +30,69 @@ const RestrictionsPage = () => {
   };
 
   useEffect(() => {
-    actualizarRestricciones();
+    // Ejemplo de cómo recuperar un objeto JSON de AsyncStorage
+    const getData = async () => {
+      try {
+        const jsonString = await AsyncStorage.getItem('restricciones');
+        const data = JSON.parse(jsonString) || [];
+
+        if (data.includes('Celiaquismo')){
+          setCeliaquismo(true);
+        }
+        if (data.includes('Diabetes')){
+          setDiabetes(true);
+        }
+        if (data.includes('Dieta baja en Colesterol')){
+          setBajoColesterol(true);
+        }
+        if (data.includes('Hipertensión')){
+          setHipertension(true);
+        }
+        if (data.includes('Intolerancia a la Lactosa')){
+          setIntoleranciaLactosa(true);
+        }
+        if (data.includes('Veganismo')){
+          setVeganismo(true);
+        }
+        if (data.includes('Vegetarianismo')){
+          setVegetarianismo(true);
+        }
+
+        setRestricciones(data);
+        console.log('Restricciones recuperadas:', data);
+        setIsDataLoaded(true);
+        
+      } catch (error) {
+        console.log('Error al recuperar las restricciones:', error);
+      }
+    };
+
+    getData();
+  }, []);
+
+  useEffect(() => {
+    // Ejemplo de cómo recuperar un objeto JSON de AsyncStorage
+    const getData = async () => {
+      try {
+        const jsonString = await AsyncStorage.getItem('ingredientes');
+        const data = JSON.parse(jsonString) || [];
+
+        setProductosIngredientes(data);
+        console.log('Ingredientes recuperados:', data);
+        setIsDataLoaded2(true);
+        
+      } catch (error) {
+        console.log('Error al recuperar los ingredientes:', error);
+      }
+    };
+
+    getData();
+  }, []);
+
+  useEffect(() => {
+    if (isDataLoaded){
+      actualizarRestricciones();
+    }
   }, [celiaquismo, diabetes, bajoColesterol, hipertension, intoleranciaLactosa, veganismo, vegetarianismo]);
 
   const actualizarRestricciones = () => {
@@ -40,35 +110,67 @@ const RestrictionsPage = () => {
     setRestricciones(nuevasRestricciones);
 
     console.log('Restricciones actualizadas:', nuevasRestricciones);
+
+    agregarRestriccion(nuevasRestricciones);
+
   };
 
-  useEffect(() => {
-    const saveData = async () => {
-      try {
-        await AsyncStorage.setItem('restricciones', JSON.stringify(restricciones));
-      } catch (error) {
-        console.log('Error al actualizar las restricciones:', error);
-      }
-    };
+  const agregarRestriccion = async (p) => {
+    try { 
+      // Actualiza las restricciones en AsyncStorage
+      await AsyncStorage.setItem('restricciones', JSON.stringify(p));
+    } catch (error) {
+      console.log('Error al agregar al historial:', error);
+    }
+  };
+
+  this.myTextInput = React.createRef();
+
+  const agregarIngrediente = async (p) => {
+    try { 
+      const newArray = [...productosIngredientes, p];
+      productosIngredientes.push(p);
+
+
+      setProductosIngredientes(newArray);
+      await AsyncStorage.setItem('ingredientes', JSON.stringify(productosIngredientes));
+    } catch (error) {
+      console.log('Error al agregar ingrediente:', error);
+    }
+  };
+
+  function pressEnviar() {
+    console.log(inputValue)
+    agregarIngrediente(inputValue);
+    this.myTextInput.current.clear(); 
+    this.myTextInput.current.blur();
+    handleSend2();
+  }
+
   
-    saveData();
-  }, [restricciones]);
+  const handleSend2 = () => {
+    toastRef2.current.show('Ingrediente agregado correctamente.', DURATION.LENGTH_LONG);
+  };
 
-  useEffect(() => {
-    // Ejemplo de cómo recuperar un objeto JSON de AsyncStorage
-    const getData = async () => {
-      try {
-        const jsonString = await AsyncStorage.getItem('restricciones');
-        const data = JSON.parse(jsonString);
-        setRestricciones(data);
-        console.log('Restricciones recuperadas:', data);
-      } catch (error) {
-        console.log('Error al recuperar las restricciones:', error);
-      }
-    };
+  const handleSend3 = () => {
+    toastRef2.current.show('Ingrediente eliminado correctamente.', DURATION.LENGTH_LONG);
+  };
 
-    getData();
-  }, []);
+  const handleImagePress = (index) => {
+    eliminarIngrediente(index);
+    handleSend3();
+  };
+
+  const eliminarIngrediente = async (indexToRemove) => {
+    try { 
+      const newArray = productosIngredientes.filter((_, index) => index !== indexToRemove);
+
+      setProductosIngredientes(newArray);
+      await AsyncStorage.setItem('ingredientes', JSON.stringify(newArray));
+    } catch (error) {
+      console.log('Error al agregar ingrediente:', error);
+    }
+  };
 
   const cambiarCeliaquismo = (value) => {
     setCeliaquismo(value);
@@ -183,58 +285,67 @@ Restricciones`}</Text>
       <Text
         style={[styles.restriccionesFrecuentes, styles.ingredientesAEvitarTypo]}
       >
-        Restricciones frecuentes
+        Restricciones Frecuentes
       </Text>
       <Text
         style={[styles.ingredientesAEvitar, styles.ingredientesAEvitarTypo]}
       >
-        Ingredientes a evitar
+        Ingredientes a Evitar
       </Text>
       <TextInput
+        ref={this.myTextInput}
         style={[styles.restrictionsPageChild, styles.restrictionsPageChildTypo]}
-        placeholder="Buscar ingrediente"
+        placeholder="Ingresar ingrediente"
         keyboardType="default"
         placeholderTextColor="rgba(0, 0, 0, 0.4)"
+        onBlur={() =>  pressEnviar()}
+        onChangeText={setInputValue}
         
       />
-      <View
-        style={[
-          styles.tartrazinaColoranteAmarilloWrapper,
-          styles.wrapperPosition,
-        ]}
-      >
-        <Text
-          style={[
-            styles.tartrazinaColoranteAmarillo,
-            styles.restrictionsPageChildTypo,
-          ]}
-        >
-          Tartrazina (colorante amarillo)
-        </Text>
-      </View>
-      <Image
-        style={[styles.vectorIcon, styles.vectorIconLayout]}
-        contentFit="cover"
-        source={require("../assets/vector.png")}
-      />
-      <View style={[styles.sorbitolWrapper, styles.wrapperPosition]}>
-        <Text
-          style={[
-            styles.tartrazinaColoranteAmarillo,
-            styles.restrictionsPageChildTypo,
-          ]}
-        >
-          Sorbitol
-        </Text>
-      </View>
-      <Image
-        style={[styles.vectorIcon1, styles.vectorIconLayout]}
-        contentFit="cover"
-        source={require("../assets/vector.png")}
-      />
+
+    <View style={{ top: 600, left: 37, height: 100, overflow: 'scroll', width: 315 }}>
+      <ScrollView contentContainerStyle={{ paddingVertical: 0}}>
+
+        {productosIngredientes != null &&  productosIngredientes.length !== 0 ? (
+          
+          productosIngredientes.map((producto, index) =>
+          
+          <View key={index} style={{ height: 30, marginBottom: 10, backgroundColor: Color.sandybrown, borderRadius: 10 }}>
+
+          
+          <Text
+            style={[styles.tartrazinaColoranteAmarillo, styles.restrictionsPageChildTypo]}>
+            {producto}
+          </Text>
+
+          <Pressable key={index} onPress={() => handleImagePress(index)} style={[styles.vectorIcon1, styles.vectorIconLayout, { position: 'absolute', top: 0, right: 0 }]}>
+          <Image
+              style={[styles.vectorIcon1, styles.vectorIconLayout, { position: 'absolute', top: 7, right: 8 }]}
+              contentFit="cover"
+              source={require("../assets/vector.png")}
+              
+          />
+          </Pressable>
+          
+
+          </View>
+
+          
+
+            )
+
+        ) : <></>}
+        
+      </ScrollView>
+    </View>
 
       <Toast
         ref={toastRef}
+        style={{ backgroundColor: 'gray', position: 'absolute', top: 30 }}
+        position="top"
+      />
+      <Toast
+        ref={toastRef2}
         style={{ backgroundColor: 'gray', position: 'absolute', top: 30 }}
         position="top"
       />
@@ -245,7 +356,7 @@ Restricciones`}</Text>
 
 const styles = StyleSheet.create({
   timeClr: {
-    color: Color.black,
+    color: Color.seagreen,
     textAlign: "center",
   },
   diabetesTypo: {
@@ -311,7 +422,6 @@ const styles = StyleSheet.create({
   vectorIconLayout: {
     height: 16,
     width: 16,
-    left: 326,
     position: "absolute",
   },
   timePosition: {
@@ -344,11 +454,12 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   misRestricciones: {
-    top: 40,
+    top: 50,
     left: 94,
     fontSize: FontSize.size_13xl,
     fontWeight: '900',
     fontFamily: FontFamily.interBlack,
+    color: Color.seagreen,
     
     position: "absolute",
   },
@@ -455,12 +566,20 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     left: 31,
     position: "absolute",
+    borderRadius: Border.br_6xl,
+    backgroundColor: Color.white,
+    flexDirection: "row",
+    padding: Padding.p_3xs,
+    fontWeight: "600",
+    fontSize: FontSize.size_xs,
   },
   tartrazinaColoranteAmarillo: {
     alignSelf: "stretch",
     display: "flex",
     alignItems: "center",
     width: 255,
+    top: 3,
+    left: 10,
     textAlign: "left",
     fontSize: FontSize.size_base,
     color: Color.black,
@@ -474,7 +593,7 @@ const styles = StyleSheet.create({
     top: 613,
   },
   sorbitolWrapper: {
-    top: 661,
+    top: 600,
   },
   vectorIcon1: {
     top: 674,

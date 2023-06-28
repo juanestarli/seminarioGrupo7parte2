@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   aptoParaSuConsumoWrapper: {
-    top: 327,
+    top: 280,
     borderRadius: Border.br_6xl,
     backgroundColor: Color.seagreen,
     width: 333,
@@ -224,17 +224,17 @@ const styles = StyleSheet.create({
     color: Color.black,
   },
   noEstDeContainer: {
-    left: 206,
-    top: 802,
+    left: 200,
+    top: 755,
     position: "absolute",
   },
   iconCheckCircle: {
-    height: "25.24%",
-    width: "54.62%",
-    top: "10.9%",
-    right: "22.56%",
+    height: 180,
+    width: 180,
+    top: 70,
+    right: "26%",
     bottom: "63.86%",
-    left: "22.82%",
+    left: "26%",
     position: "absolute",
   },
   seguirEscaneando: {
@@ -242,9 +242,11 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.workSansBold,
     textAlign: "right",
     width: 271,
+    top: 14,
+    right: 8,
   },
   seguirEscaneandoWrapper: {
-    top: 4,
+    top: -40,
     left: 34,
     borderRadius: Border.br_3xs,
     backgroundColor: Color.chocolate,
@@ -255,12 +257,12 @@ const styles = StyleSheet.create({
     left: -4,
     width: 92,
     height: 92,
-    top: 0,
+    top: -45,
     position: "absolute",
   },
   frameParent: {
     top: 689,
-    height: 84,
+    height: 35,
     position: "absolute",
   },
   iconLayout: {
@@ -269,7 +271,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     left: 17,
-    top: 62,
+    top: 30,
     width: 68,
     height: 68,
     position: "absolute",
@@ -304,7 +306,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   tarjeta: {
-    top: 435,
+    top: 395,
     shadowColor: "rgba(0, 0, 0, 0.25)",
     shadowOffset: {
       width: 0,
@@ -317,11 +319,11 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   image13Icon: {
-    top: 405,
-    left: 328,
-    borderRadius: 200,
-    width: 49,
-    height: 60,
+    top: 365,
+    left: 340,
+    borderRadius: 21,
+    width: 40,
+    height: 65,
     position: "absolute",
   },
   productDataPageApto: {

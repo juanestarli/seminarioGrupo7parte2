@@ -72,31 +72,14 @@ const Nutriscore = () => {
         ]}
       >
         <Text style={styles.aspectosPositivosRaznContainer1}>
-          <Text style={styles.aspectosPositivos}>{`ASPECTOS POSITIVOS:
-`}</Text>
-          <Text style={styles.raznPositivaRaznPositiva}>
-            <Text style={styles.blankLine}> </Text>
-            <Text style={styles.raznPositivaRaznPositiva1}>{`Razón positiva
-Razón positiva`}</Text>
-          </Text>
-        </Text>
+          <Text style={styles.aspectosPositivos}>{`OBSERVACIONES:\n`}</Text>
+          <Text style={styles.blankLine}> </Text>
+          {Object.entries(dataParaApto.nutrient_levels).map(([key, value], index) => (
+    <Text key={index} style={styles.raznPositivaRaznPositiva1}>{`${key}: ${value}\n`}</Text>
+  ))}
+</Text>
       </Text>
-      <Text
-        style={[
-          styles.aspectosNegativosRaznContainer,
-          styles.aspectosContainerTypo,
-        ]}
-      >
-        <Text style={styles.aspectosPositivosRaznContainer1}>
-          <Text style={styles.aspectosNegativos}>{`ASPECTOS NEGATIVOS:
-`}</Text>
-          <Text style={styles.raznPositivaRaznPositiva}>
-            <Text style={styles.blankLine}> </Text>
-            <Text style={styles.raznPositivaRaznPositiva1}>{`Razón negativa
-Razón negativa`}</Text>
-          </Text>
-        </Text>
-      </Text>
+      
       <Text style={[styles.nutriScore, styles.nutriScoreTypo]}>
         NUTRI-SCORE:
       </Text>
@@ -278,8 +261,8 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   wrapper: {
-    left: 33,
-    top: 67,
+    left: 17,
+    top: 30,
     width: 68,
     height: 68,
     position: "absolute",
@@ -301,8 +284,8 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   aspectosPositivos: {
-    color: Color.seagreen,
-    fontSize: FontSize.size_xl,
+    color: Color.chocolate,
+    fontSize: FontSize.size_13xl,
   },
   blankLine: {
     fontSize: FontSize.size_3xs,
@@ -328,7 +311,7 @@ const styles = StyleSheet.create({
   },
   nutriScore: {
     top: 377,
-    left: 107,
+    left: 115,
     fontSize: FontSize.size_5xl,
     fontWeight: "700",
     fontFamily: FontFamily.interBold,
@@ -339,9 +322,11 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.workSansBold,
     textAlign: "right",
     width: 271,
+    top: 12,
+    right: 4,
   },
   seguirEscaneandoWrapper: {
-    top: 4,
+    top: -10,
     left: 34,
     borderRadius: Border.br_3xs,
     backgroundColor: Color.chocolate,
@@ -355,7 +340,7 @@ const styles = StyleSheet.create({
     left: -4,
     width: 92,
     height: 92,
-    top: 0,
+    top: -15,
     position: "absolute",
   },
   frameParent: {

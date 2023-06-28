@@ -6,7 +6,7 @@ import {useIsFocused} from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast, { DURATION } from 'react-native-easy-toast';
-
+import { Padding, FontFamily, FontSize, Color, Border } from "../GlobalStyles";
 
 const ScanPage = () => {
   const navigation = useNavigation();
@@ -53,6 +53,28 @@ const ScanPage = () => {
     getData();
   }, []);
 
+  const agregarAlHistorial = async (p) => {
+    try {
+      // Obtén el historial actual almacenado en AsyncStorage
+      const historialActual = await AsyncStorage.getItem('productosHistorial');
+      const historialArray = JSON.parse(historialActual) || [];
+  
+      // Agrega el producto al historial
+      historialArray.push(p);
+
+      console.log(historialArray)
+  
+      // Actualiza el historial en AsyncStorage
+      await AsyncStorage.setItem('productosHistorial', JSON.stringify(historialArray));
+    } catch (error) {
+      console.log('Error al agregar al historial:', error);
+    }
+  };
+
+  const handleHistorial = (p) => {
+    agregarAlHistorial(p);
+  };
+
   const handleBarCodeScanned = ({type, data}) => {
     this.camera.pausePreview();
     toastRef.current.show('Procesando código...', DURATION.LENGTH_LONG);
@@ -60,7 +82,6 @@ const ScanPage = () => {
     console.log(`Data: ${data}`);
     console.log(`Type: ${type}`); 
     getNameProduct(data);
-    
   }
 
   const getNameProduct = async (data) => {
@@ -81,24 +102,38 @@ const ScanPage = () => {
       const imagenUrl = json.product.image_url;
       const nr = json.product.nutriscore_grade;
       const restr = restricciones;
-      const ingredients = json.ingredients_tags;
-      console.log(ingredients);
+<<<<<<< HEAD
+      if (json.product.ingredients_tags) {
+        const ingredients = json.product.ingredients_tags;
+        const listaIngredients = Array.isArray(ingredients) ? ingredients : [ingredients];
+        setApto(verificarIngredientes(listaIngredients));
+      }
+       
+      console.log(listaIngredients);
       await AsyncStorage.setItem('nombreProducto', productName);
       const nombreProducto= await AsyncStorage.getItem('nombreProducto');
 
-      setApto(verificarIngredientes(ingredients));
+      
+    
+=======
+      const ingredients = json.ingredients_tags;
+      const nutrient_levels = json.product.nutrient_levels;
+      console.log(nutrient_levels);
+      //await AsyncStorage.setItem('nombreProducto', productName);
+      //const nombreProducto= await AsyncStorage.getItem('nombreProducto');
+
+      setApto(true);
+      
+>>>>>>> d095abcc2e46f487798024883764c67538f80918
       
       
       
       function quitarPrefijo(palabra) {
-        if (palabra.length <= 3) {
-          return palabra;
-        }
-        
-        return palabra.substring(3);
+        console.log(String(palabra));
+        return String(palabra).substring(3);
       }
 
-      function verificarIngredientes(ingredientes) {
+      function verificarIngredientes(listaIngredients) {
         let Apto=true;
         const noAptoParaVeganos = [
           'carmín/cochinilla (E120)',
@@ -158,13 +193,11 @@ const ScanPage = () => {
         // VEGANISMO
 
         if (restricciones.includes("Veganismo")){
-            for (let i = 0; i < ingredients.length; i++) {
-              if (noAptoParaVeganos.includes(quitarPrefijo(ingredients[i])))  {
-                Apto=false;
-                break;
-              }
+          listaIngredients.forEach(ingredient => {
+            if (noAptoParaVeganos.includes(quitarPrefijo(ingredient)))  {
+              Apto=false;
             }
-            restr.push('Veganismo');
+          });
           }
         return Apto;
       }
@@ -187,11 +220,21 @@ const ScanPage = () => {
         imgUrl : imagenUrl,
         nutriscore : nr,
         restricciones : restr,
-        apto : apto
+        apto : apto,
+        nutrient_levels: nutrient_levels
       };
 
-      console.log(apto);
-      console.log(restr);
+      // Lo agrego al historial
+
+      const prodHistorialOk = {
+        nombre : productName,
+        imgUrl : imagenUrl,
+        nutriscore : nr,
+        nutrient_levels: nutrient_levels
+      };
+
+      handleHistorial(prodHistorialOk);
+
       if (apto == true){
         navigation.navigate("ProductDataPageAPTO", {dataParaApto});
       } else {
@@ -232,6 +275,7 @@ const ScanPage = () => {
         style={{ backgroundColor: 'gray', position: 'absolute', top: 100 }}
         position="top"
       />
+      <Text style={styles.tituloCamara}>ESCANEE EL CÓDIGO DE BARRAS</Text>
    </View>
    
    
@@ -267,6 +311,16 @@ const styles = StyleSheet.create({
   iconLayout: {
     height: "100%",
     width: "100%",
+  },
+  tituloCamara: {
+    top: -35,
+    left: -15,
+    fontSize: FontSize.size_lg,
+    fontFamily: FontFamily.workSansBold,
+    justifyContent: "center",
+    width: 400,
+    textAlign: "center",
+    position: "absolute",
   },
 });
 

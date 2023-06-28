@@ -28,7 +28,7 @@ const ProductDataPageNOSEENCUEN = () => {
         source={require("../assets/imagenPrdcoNoEncontrado.png")}
       />
       <Text style={[styles.noPudimosEncontrar, styles.volverAEscanearFlexBox]}>
-        NO PUDIMOS ENCONTRAR EL PRODUCTO, INTENTE CON UN PRODUCTO DIFERENTE
+        NO SE ENCONTRÓ EL PRODUCTO. ESCANEE DE NUEVO O INTENTE CON UN UNO DIFERENTE.
       </Text>
       <Pressable
         style={styles.frameParent}
@@ -36,7 +36,7 @@ const ProductDataPageNOSEENCUEN = () => {
       >
         <View style={styles.volverAEscanearWrapper}>
           <Text style={[styles.volverAEscanear, styles.volverAEscanearFlexBox]}>
-            VOLVER A ESCANEAR
+            SEGUIR ESCANEANDO
           </Text>
         </View>
         <Image
@@ -51,7 +51,7 @@ const ProductDataPageNOSEENCUEN = () => {
 
 const styles = StyleSheet.create({
   groupChildPosition: {
-    top: 0,
+    top: -45,
     position: "absolute",
   },
   timeFlexBox: {
@@ -131,25 +131,23 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     left: 17,
-    top: 62,
+    top: 30,
     width: 68,
     height: 68,
     position: "absolute",
   },
   iconTimesCircle: {
-    height: "25.12%",
-    width: "54.36%",
-    top: "24.88%",
-    right: "23.33%",
+    height: 180,
+    width: 180,
+    top: 130,
     bottom: "50%",
-    left: "22.31%",
+    left: 105,
     maxWidth: "100%",
     maxHeight: "100%",
     position: "absolute",
-    overflow: "hidden",
   },
   noPudimosEncontrar: {
-    top: 463,
+    top: 400,
     left: 35,
     fontSize: FontSize.size_5xl,
     fontFamily: FontFamily.interBold,
@@ -164,9 +162,10 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.workSansBold,
     textAlign: "right",
     width: 263,
+    top: 14,
   },
   volverAEscanearWrapper: {
-    top: 4,
+    top: -40,
     left: 34,
     borderRadius: Border.br_3xs,
     backgroundColor: Color.chocolate,
@@ -183,9 +182,9 @@ const styles = StyleSheet.create({
   },
   frameParent: {
     top: 689,
-    left: 10,
+    left: 20,
     width: 333,
-    height: 84,
+    height: 38,
     position: "absolute",
   },
   productDataPageNoSeEncuen: {
