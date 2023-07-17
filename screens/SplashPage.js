@@ -35,7 +35,7 @@ const SplashPage = () => {
   return (
     <View style={[styles.splashPage, styles.iconLayout]}>
       
-      <Text style={[styles.checkIt, styles.timeFlexBox]}>CHECK IT</Text>
+      <Text style={[styles.checkIt, styles.timeFlexBox]}>CHECK-EAT</Text>
       <Image
         style={styles.splashPageChild}
         contentFit="cover"
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   checkIt: {
     top: 340,
-    left: 90,
+    left: 60,
     fontSize: FontSize.size_29xl,
     fontWeight: "900",
     fontFamily: FontFamily.interBlack,
