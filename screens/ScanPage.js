@@ -238,13 +238,16 @@ const ScanPage = () => {
         if (data == 7622201808884){
 
           const dataParaApto = {
-            nombre : 'Anillitos Terrabusi',
+            nombre : 'Anillos Terrabusi',
             imgUrl : imagenUrl,
             nutriscore : nr,
             restricciones : restr,
             apto : false,
-            nutrient_levels: nutrient_levels
+            nutrient_levels: nutrient_levels,
+            imgIndex: 'd'
           };
+
+          handleHistorial(dataParaApto);
   
           navigation.navigate("ProductDataPageNOAPTO", {dataParaApto});
   
@@ -256,8 +259,11 @@ const ScanPage = () => {
             nutriscore : nr,
             restricciones : restr,
             apto : true,
-            nutrient_levels: nutrient_levels
+            nutrient_levels: nutrient_levels,
+            imgIndex: 'c'
           };
+
+          handleHistorial(dataParaApto);
   
           navigation.navigate("ProductDataPageAPTO", {dataParaApto});
   
@@ -273,8 +279,11 @@ const ScanPage = () => {
             nutriscore : nr,
             restricciones : restr,
             apto : true,
-            nutrient_levels: nutrient_levels
+            nutrient_levels: nutrient_levels,
+            imgIndex: 'c'
           };
+
+          handleHistorial(dataParaApto);
   
           navigation.navigate("ProductDataPageNOAPTO", {dataParaApto});
   
@@ -288,8 +297,11 @@ const ScanPage = () => {
             nutriscore : nr,
             restricciones : restr,
             apto : true,
-            nutrient_levels: nutrient_levels
+            nutrient_levels: nutrient_levels,
+            imgIndex: 'b'
           };
+
+          handleHistorial(dataParaApto);
   
           navigation.navigate("ProductDataPageAPTO", {dataParaApto});
   
@@ -297,13 +309,16 @@ const ScanPage = () => {
         else if (data == 7790895009853){
   
           const dataParaApto = {
-            nombre : ' CEPITA MANZANA 1L',
-            imgUrl : imagenUrl,
+            nombre : 'CEPITA MANZANA 1L',
+            imgUrl : '../assets/cepita.png',
             nutriscore : nr,
             restricciones : restr,
             apto : true,
-            nutrient_levels: nutrient_levels
+            nutrient_levels: nutrient_levels,
+            imgIndex: 'a'
           };
+
+          handleHistorial(dataParaApto);
   
           navigation.navigate("ProductDataPageAPTO", {dataParaApto});
   
@@ -325,7 +340,7 @@ const ScanPage = () => {
         nutrient_levels: nutrient_levels
       };
 
-      handleHistorial(prodHistorialOk);
+      //handleHistorial(dataParaApto);
 
       /*if (apto == true){
         navigation.navigate("ProductDataPageAPTO", {dataParaApto});

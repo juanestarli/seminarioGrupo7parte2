@@ -14,6 +14,13 @@ import { useState, useEffect, useRef } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { isLoaded } from "expo-font";
 
+const prodImages = {
+  a: require('../assets/cepita.png'),
+  b: require('../assets/frutigram.png'),
+  c: require('../assets/mogul.png'),
+  d: require('../assets/anillos.png')
+};
+
 const HistorialPage = () => {
   const navigation = useNavigation();
 
@@ -50,7 +57,8 @@ const HistorialPage = () => {
       nombre : prod.nombre,
       imgUrl : prod.imgUrl,
       nr : prod.nutriscore,
-      nutrient_levels : prod.nutrient_levels
+      nutrient_levels : prod.nutrient_levels,
+      imgIndex: prod.imgIndex
     };
 
     navigation.navigate("Nutriscore", {dataParaApto});
@@ -74,8 +82,8 @@ const HistorialPage = () => {
             >
 
             <View style={[styles.tarjetaChild, styles.image5IconLayout]} />
-            {producto.imgUrl ? (
-                <Image source={{ uri: producto.imgUrl }} style={[styles.image5Icon, styles.image5IconLayout]} contentFit="cover" />
+            {producto.imgIndex ? (
+                <Image source={prodImages[producto.imgIndex]} style={[styles.image5Icon, styles.image5IconLayout]} contentFit="cover" />
               ) : (
                 <></>
             )}

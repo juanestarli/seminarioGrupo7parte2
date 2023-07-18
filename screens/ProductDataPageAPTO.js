@@ -18,6 +18,13 @@ const ProductDataPageAPTO = () => {
   const route = useRoute();
   const { dataParaApto } = route.params;
 
+  const prodImages = {
+    a: require('../assets/cepita.png'),
+    b: require('../assets/frutigram.png'),
+    c: require('../assets/mogul.png'),
+    d: require('../assets/anillos.png')
+  };
+
   const nutriscoreImages = {
     a: require('../assets/nutriscore-a.png'),
     b: require('../assets/nutriscore-b.png'),
@@ -83,7 +90,7 @@ CONSUMO`}</Text>
         <Image
           style={[styles.image5Icon, styles.image5IconLayout]}
           contentFit="cover"
-          source={{uri : dataParaApto.imgUrl}}
+          source={prodImages[dataParaApto.imgIndex]}
         />
         <Text style={[styles.milanesaDeSoja, styles.milanesaDeSojaTypo]}>
           {dataParaApto.nombre}

@@ -16,6 +16,13 @@ const Nutriscore = () => {
 
   const route = useRoute();
   const { dataParaApto } = route.params;
+
+  const prodImages = {
+    a: require('../assets/cepita.png'),
+    b: require('../assets/frutigram.png'),
+    c: require('../assets/mogul.png'),
+    d: require('../assets/anillos.png')
+  };
   
   const nutriscoreImages = {
     a: require('../assets/nutriscore-a.png'),
@@ -36,7 +43,7 @@ const Nutriscore = () => {
       <Image
         style={[styles.image10Icon, styles.iconLayout]}
         contentFit="cover"
-        source={{uri : dataParaApto.imgUrl}}
+        source={prodImages[dataParaApto.imgIndex]}
       />
       <Pressable
         style={styles.wrapper}
