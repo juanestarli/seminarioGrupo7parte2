@@ -98,7 +98,7 @@ const ProductSearchPage = () => {
     //const listaFiltrada = data.products.filter((producto) => producto.countries != undefined && (producto.countries.includes("argentina") || producto.countries.includes("Argentina") || producto.countries.includes("Argentine") || producto.countries.includes("argentine")));
     
     const listaBuscar = [
-      {product_name : 'Cepita Manzana 1L',
+      {product_name : 'Cepita Naranja 1L',
       image_url : '',
       nutriscore_grade : 'e',
       restr : [],
