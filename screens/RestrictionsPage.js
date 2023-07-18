@@ -455,7 +455,7 @@ const styles = StyleSheet.create({
   },
   misRestricciones: {
     top: 50,
-    left: 94,
+    left: 100,
     fontSize: FontSize.size_13xl,
     fontWeight: '900',
     fontFamily: FontFamily.interBlack,

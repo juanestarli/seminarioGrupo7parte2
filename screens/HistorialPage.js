@@ -21,6 +21,14 @@ const prodImages = {
   d: require('../assets/anillos.png')
 };
 
+const nutriscoreImages = {
+  a: require('../assets/nutriscore-a.png'),
+  b: require('../assets/nutriscore-b.png'),
+  c: require('../assets/nutriscore-c.png'),
+  d: require('../assets/nutriscore-d.png'),
+  e: require('../assets/nutriscore-e.png')
+};
+
 const HistorialPage = () => {
   const navigation = useNavigation();
 
@@ -56,7 +64,7 @@ const HistorialPage = () => {
     const dataParaApto = {
       nombre : prod.nombre,
       imgUrl : prod.imgUrl,
-      nr : prod.nutriscore,
+      nutriscore : prod.nutriscore,
       nutrient_levels : prod.nutrient_levels,
       imgIndex: prod.imgIndex
     };

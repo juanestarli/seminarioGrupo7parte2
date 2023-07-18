@@ -368,7 +368,7 @@ const ScanPage = () => {
       <Pressable
         style={styles.wrapper}
         onPress={() =>
-          navigation.navigate("BottomTabsRoot", { screen: "HomePage" })
+          navigation.navigate("HomePage")
         }
       >
         <Image
@@ -409,19 +409,19 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   wrapper: {
-    left: -15,
-    top: -22,
+    left: -10,
+    top: -75,
     width: 80,
     height: 80,
-    position: "absolute",
+    position: "absolute"
   },
   iconLayout: {
-    height: "100%",
-    width: "100%",
+    height: "85%",
+    width: "85%",
   },
   tituloCamara: {
-    top: -35,
-    left: -15,
+    top: -55,
+    left: 10,
     fontSize: FontSize.size_lg,
     fontFamily: FontFamily.workSansBold,
     justifyContent: "center",

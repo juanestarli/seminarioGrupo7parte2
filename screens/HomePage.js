@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   },
   chequeTusProductos: {
     top: 175,
-    left: 30,
+    left: 15,
     fontSize: FontSize.size_5xl,
     fontWeight: "600",
     fontFamily: FontFamily.niramitSemibold,
