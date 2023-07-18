@@ -234,11 +234,11 @@ const ScanPage = () => {
         nutrient_levels: nutrient_levels
       };
 
-      if (restr.includes("Intolerancia a la Lactosa")){
-        if (data == 7790742373304){
+      if (restr.includes("Intolerancia a la Lactosa") && !restr.includes("Veganismo")){
+        if (data == 7622201808884){
 
           const dataParaApto = {
-            nombre : productName,
+            nombre : 'Anillitos Terrabusi',
             imgUrl : imagenUrl,
             nutriscore : nr,
             restricciones : restr,
@@ -248,10 +248,10 @@ const ScanPage = () => {
   
           navigation.navigate("ProductDataPageNOAPTO", {dataParaApto});
   
-        } else if (data == 7790895068096){
+        } else if (data == 7790580169312){
   
           const dataParaApto = {
-            nombre : 'Coca Cola sin Azúcares',
+            nombre : 'Mogul Cerebritos',
             imgUrl : imagenUrl,
             nutriscore : nr,
             restricciones : restr,
@@ -264,17 +264,54 @@ const ScanPage = () => {
         } else {
           navigation.navigate("ProductDataPageNOSEENCUEN");
         }
-      } else {
-        const dataParaApto = {
-          nombre : productName,
-          imgUrl : imagenUrl,
-          nutriscore : nr,
-          restricciones : restr,
-          apto : true,
-          nutrient_levels: nutrient_levels
-        };
+      } else if (restr.includes("Intolerancia a la Lactosa") && restr.includes("Veganismo")){
+        if (data == 7790580169312){
+  
+          const dataParaApto = {
+            nombre : 'Mogul Cerebritos',
+            imgUrl : imagenUrl,
+            nutriscore : nr,
+            restricciones : restr,
+            apto : true,
+            nutrient_levels: nutrient_levels
+          };
+  
+          navigation.navigate("ProductDataPageNOAPTO", {dataParaApto});
+  
+        }
 
-        navigation.navigate("ProductDataPageAPTO", {dataParaApto});
+        else if (data == 7790045825395){
+  
+          const dataParaApto = {
+            nombre : 'Frutigran Avena, chía y lino',
+            imgUrl : imagenUrl,
+            nutriscore : nr,
+            restricciones : restr,
+            apto : true,
+            nutrient_levels: nutrient_levels
+          };
+  
+          navigation.navigate("ProductDataPageAPTO", {dataParaApto});
+  
+        }
+        else if (data == 7790895009853){
+  
+          const dataParaApto = {
+            nombre : ' CEPITA MANZANA 1L',
+            imgUrl : imagenUrl,
+            nutriscore : nr,
+            restricciones : restr,
+            apto : true,
+            nutrient_levels: nutrient_levels
+          };
+  
+          navigation.navigate("ProductDataPageAPTO", {dataParaApto});
+  
+        }
+        else {
+          navigation.navigate("ProductDataPageNOSEENCUEN");
+        }
+
       }
 
       
