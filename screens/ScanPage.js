@@ -233,8 +233,7 @@ const ScanPage = () => {
         apto : apto,
         nutrient_levels: nutrient_levels
       };
-
-      if (restr.includes("Intolerancia a la Lactosa") && !restr.includes("Veganismo")){
+      if (restr.length === 0){
         if (data == 7622201808884){
 
           const dataParaApto = {
@@ -243,12 +242,87 @@ const ScanPage = () => {
             nutriscore : nr,
             restricciones : restr,
             apto : false,
-            nutrient_levels: nutrient_levels,
+            nutrient_levels: {"Grasa":"Moderada", "Sal": "Moderada", "Grasa saturada": "Alta", "Azucar": "Alta"}, 
             imgIndex: 'd'
           };
 
           handleHistorial(dataParaApto);
+          navigation.navigate("Nutriscore", {dataParaApto});
+      }
+
+      else if (data == 7790580169312){
   
+        const dataParaApto = {
+          nombre : 'Mogul Cerebritos',
+          imgUrl : imagenUrl,
+          nutriscore : nr,
+          restricciones : restr,
+          apto : true,
+          nutrient_levels: {"Grasa":"Baja", "Sal": "Baja", "Grasa saturada": "Baja", "Azucar": "Alta"},
+          imgIndex: 'c'
+        };
+
+        handleHistorial(dataParaApto);
+
+        navigation.navigate("Nutriscore", {dataParaApto});
+
+      }
+
+      
+
+      else if (data == 7790045825395){
+
+        const dataParaApto = {
+          nombre : 'Frutigran Avena, chía y lino',
+          imgUrl : imagenUrl,
+          nutriscore : nr,
+          restricciones : restr,
+          apto : true,
+          nutrient_levels: {"Grasa":"Moderada", "Sal": "Moderada", "Grasa saturada": "Baja", "Azucar": "Alta"},
+          imgIndex: 'b'
+        };
+
+        handleHistorial(dataParaApto);
+
+        navigation.navigate("Nutriscore", {dataParaApto});
+
+      }
+      else if (data == 7790895009853){
+
+        const dataParaApto = {
+          nombre : 'CEPITA MANZANA 1L',
+          imgUrl : '../assets/cepita.png',
+          nutriscore : nr,
+          restricciones : restr,
+          apto : true,
+          nutrient_levels: {"Grasa":"Baja", "Sal": "Baja", "Grasa saturada": "Baja", "Azucar": "Alta"},
+          imgIndex: 'a'
+        };
+
+        handleHistorial(dataParaApto);
+        navigation.navigate("Nutriscore", {dataParaApto});
+
+      }
+
+      else {
+        navigation.navigate("ProductDataPageNOSEENCUEN");
+      }
+
+    }
+      else if (restr.includes("Intolerancia a la Lactosa") && !restr.includes("Veganismo")){
+        if (data == 7622201808884){
+
+          const dataParaApto = {
+            nombre : 'Anillos Terrabusi',
+            imgUrl : imagenUrl,
+            nutriscore : nr,
+            restricciones : restr,
+            apto : false,
+            nutrient_levels: {"Grasa":"Moderada", "Sal": "Moderada", "Grasa saturada": "Alta", "Azucar": "Alta"},
+            imgIndex: 'd'
+          };
+
+          handleHistorial(dataParaApto);
           navigation.navigate("ProductDataPageNOAPTO", {dataParaApto});
   
         } else if (data == 7790580169312){
@@ -259,17 +333,50 @@ const ScanPage = () => {
             nutriscore : nr,
             restricciones : restr,
             apto : true,
-            nutrient_levels: nutrient_levels,
+            nutrient_levels: {"Grasa":"Baja", "Sal": "Baja", "Grasa saturada": "Baja", "Azucar": "Alta"},
             imgIndex: 'c'
           };
 
           handleHistorial(dataParaApto);
+          navigation.navigate("ProductDataPageAPTO", {dataParaApto});
+  
+        } else if (data == 7790895009853){
+
+          const dataParaApto = {
+            nombre : 'CEPITA MANZANA 1L',
+            imgUrl : '../assets/cepita.png',
+            nutriscore : nr,
+            restricciones : restr,
+            apto : true,
+            nutrient_levels: {"Grasa":"Baja", "Sal": "Baja", "Grasa saturada": "Baja", "Azucar": "Alta"},
+            imgIndex: 'a'
+          };
+  
+          handleHistorial(dataParaApto);
+          navigation.navigate("ProductDataPageAPTO", {dataParaApto});
+  
+        } else if (data == 7790045825395){
+
+          const dataParaApto = {
+            nombre : 'Frutigran Avena, chía y lino',
+            imgUrl : imagenUrl,
+            nutriscore : nr,
+            restricciones : restr,
+            apto : true,
+            nutrient_levels: {"Grasa":"Moderada", "Sal": "Moderada", "Grasa saturada": "Baja", "Azucar": "Alta"},
+            imgIndex: 'b'
+          };
+  
+          handleHistorial(dataParaApto);
   
           navigation.navigate("ProductDataPageAPTO", {dataParaApto});
   
-        } else {
+        }
+        
+        else {
           navigation.navigate("ProductDataPageNOSEENCUEN");
         }
+
       } else if (restr.includes("Intolerancia a la Lactosa") && restr.includes("Veganismo")){
         if (data == 7790580169312){
   
@@ -277,9 +384,9 @@ const ScanPage = () => {
             nombre : 'Mogul Cerebritos',
             imgUrl : imagenUrl,
             nutriscore : nr,
-            restricciones : restr,
+            restricciones : ['Veganismo'],
             apto : true,
-            nutrient_levels: nutrient_levels,
+            nutrient_levels: {"Grasa":"Baja", "Sal": "Baja", "Grasa saturada": "Baja", "Azucar": "Alta"},
             imgIndex: 'c'
           };
 
@@ -297,7 +404,7 @@ const ScanPage = () => {
             nutriscore : nr,
             restricciones : restr,
             apto : true,
-            nutrient_levels: nutrient_levels,
+            nutrient_levels: {"Grasa":"Moderada", "Sal": "Moderada", "Grasa saturada": "Baja", "Azucar": "Alta"},
             imgIndex: 'b'
           };
 
@@ -314,7 +421,7 @@ const ScanPage = () => {
             nutriscore : nr,
             restricciones : restr,
             apto : true,
-            nutrient_levels: nutrient_levels,
+            nutrient_levels: {"Grasa":"Baja", "Sal": "Baja", "Grasa saturada": "Baja", "Azucar": "Alta"},
             imgIndex: 'a'
           };
 
