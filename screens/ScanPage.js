@@ -270,10 +270,10 @@ const ScanPage = () => {
 
       
 
-      else if (data == 7790045825395){
+      else if (data == 7790045825791){
 
         const dataParaApto = {
-          nombre : 'Frutigran Avena, chía y lino',
+          nombre : 'Frutigran Avena y Frutos Rojos',
           imgUrl : imagenUrl,
           nutriscore : nr,
           restricciones : restr,
@@ -287,12 +287,16 @@ const ScanPage = () => {
         navigation.navigate("Nutriscore", {dataParaApto});
 
       }
-      else if (data == 7790895009853){
+      else if (data == 7790895648441){
 
         const dataParaApto = {
+<<<<<<< Updated upstream
           nombre : 'Cepita Manzana 1L',
+=======
+          nombre : 'CEPITA NARANJA 1L',
+>>>>>>> Stashed changes
           imgUrl : '../assets/cepita.png',
-          nutriscore : nr,
+          nutriscore : "e",
           restricciones : restr,
           apto : true,
           nutrient_levels: {"Grasas":"Baja", "Sal": "Baja", "Grasas saturadas": "Baja", "Azúcar": "Alta"},
@@ -340,12 +344,16 @@ const ScanPage = () => {
           handleHistorial(dataParaApto);
           navigation.navigate("ProductDataPageAPTO", {dataParaApto});
   
-        } else if (data == 7790895009853){
+        } else if (data == 7790895648441){
 
           const dataParaApto = {
+<<<<<<< Updated upstream
             nombre : 'Cepita Manzana 1L',
+=======
+            nombre : 'CEPITA NARANJA 1L',
+>>>>>>> Stashed changes
             imgUrl : '../assets/cepita.png',
-            nutriscore : nr,
+            nutriscore : "e",
             restricciones : restr,
             apto : true,
             nutrient_levels: {"Grasas":"Baja", "Sal": "Baja", "Grasas saturadas": "Baja", "Azúcar": "Alta"},
@@ -355,10 +363,10 @@ const ScanPage = () => {
           handleHistorial(dataParaApto);
           navigation.navigate("ProductDataPageAPTO", {dataParaApto});
   
-        } else if (data == 7790045825395){
+        } else if (data == 7790045825791){
 
           const dataParaApto = {
-            nombre : 'Frutigran Avena, chía y lino',
+            nombre : 'Frutigran Avena y Frutos Rojos',
             imgUrl : imagenUrl,
             nutriscore : nr,
             restricciones : restr,
@@ -396,10 +404,10 @@ const ScanPage = () => {
   
         }
 
-        else if (data == 7790045825395){
+        else if (data == 7790045825791){
   
           const dataParaApto = {
-            nombre : 'Frutigran Avena, chía y lino',
+            nombre : 'Frutigran Avena y Frutos Rojos',
             imgUrl : imagenUrl,
             nutriscore : nr,
             restricciones : restr,
@@ -413,12 +421,16 @@ const ScanPage = () => {
           navigation.navigate("ProductDataPageAPTO", {dataParaApto});
   
         }
-        else if (data == 7790895009853){
+        else if (data == 7790895648441){
   
           const dataParaApto = {
+<<<<<<< Updated upstream
             nombre : 'Cepita Manzana 1L',
+=======
+            nombre : 'CEPITA NARANJA 1L',
+>>>>>>> Stashed changes
             imgUrl : '../assets/cepita.png',
-            nutriscore : nr,
+            nutriscore : "e",
             restricciones : restr,
             apto : true,
             nutrient_levels: {"Grasas":"Baja", "Sal": "Baja", "Grasas saturadas": "Baja", "Azúcar": "Alta"},
