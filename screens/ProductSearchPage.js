@@ -28,6 +28,16 @@ const ProductSearchPage = () => {
   const [textBusqueda, setTextBusqueda] = useState('')
   const [inputValue, setInputValue] = useState('');
 
+  const prodImages = {
+    a: require('../assets/cepita.png'),
+    b: require('../assets/frutigram.png'),
+    c: require('../assets/mogul.png'),
+    d: require('../assets/anillos.png'),
+    e: require('../assets/cepita200.png'),
+    f: require('../assets/cepita15.png'),
+    g: require('../assets/cepita150.png')
+  };
+
   const agregarAlHistorial = async (p) => {
     try {
       // Obtén el historial actual almacenado en AsyncStorage
@@ -57,9 +67,9 @@ const ProductSearchPage = () => {
   };
 
   const handleInputChange = (text) => {
-    const apiUrl = `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${text}&search_simple=1&json=1`;
+    //const apiUrl = `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${text}&search_simple=1&json=1`;
 
-    axios.get(apiUrl)
+    /*axios.get(apiUrl)
     .then(response => {
       // Procesar la respuesta de la API
       const data = response.data;
@@ -83,7 +93,52 @@ const ProductSearchPage = () => {
     .catch(error => {
       // Manejar el error de la solicitud
       console.error(error);
-    });
+    });*/
+
+    //const listaFiltrada = data.products.filter((producto) => producto.countries != undefined && (producto.countries.includes("argentina") || producto.countries.includes("Argentina") || producto.countries.includes("Argentine") || producto.countries.includes("argentine")));
+    
+    const listaBuscar = [
+      {product_name : 'Cepita Manzana 1L',
+      image_url : '',
+      nutriscore_grade : 'e',
+      restr : [],
+      apto : true,
+      nutrient_levels: {"Grasas":"Baja", "Sal": "Baja", "Grasas saturadas": "Baja", "Azúcar": "Alta"},
+      imgIndex: 'a'},
+
+      {product_name : 'Cepita Naranja 200 ml',
+      image_url : '',
+      nutriscore_grade : 'd',
+      restr : [],
+      apto : true,
+      nutrient_levels: {"Grasas":"Baja", "Sal": "Baja", "Grasas saturadas": "Baja", "Azúcar": "Alta"},
+      imgIndex: 'e'},
+
+      {product_name : 'Cepita Durazno 1.5L',
+      image_url : '',
+      nutriscore_grade : 'd',
+      restr : [],
+      apto : true,
+      nutrient_levels: {"Grasas":"Baja", "Sal": "Baja", "Grasas saturadas": "Baja", "Azúcar": "Alta"},
+      imgIndex: 'f'},
+
+      {product_name : 'Cepita Naranja 1.5L',
+      image_url : '',
+      nutriscore_grade : 'd',
+      restr : [],
+      apto : true,
+      nutrient_levels: {"Grasas":"Baja", "Sal": "Baja", "Grasas saturadas": "Baja", "Azúcar": "Alta"},
+      imgIndex: 'g'}
+
+    ];
+
+    if (listaBuscar.length != 0){
+      setIsLoading(true);
+      setProductos(listaBuscar);
+    } else{
+      setIsLoading(false);
+      setTextBusqueda('No se encontraron coincidencias.');
+    }
   };
 
   const handlePress = (index) => {
@@ -92,13 +147,16 @@ const ProductSearchPage = () => {
     const dataParaApto = {
       nombre : prod.product_name,
       imgUrl : prod.image_url,
-      nr : prod.nutriscore_grade,
-      nutrient_levels: prod.nutrient_levels
+      nutriscore : prod.nutriscore_grade,
+      nutrient_levels: prod.nutrient_levels,
+      restricciones : prod.restr,
+      apto : prod.apto,
+      imgIndex: prod.imgIndex
     };
 
     handleHistorial(dataParaApto);
 
-    navigation.navigate("Nutriscore", {dataParaApto});
+    navigation.navigate("ProductDataPageAPTO", {dataParaApto});
   };
 
   return (
@@ -130,8 +188,8 @@ const ProductSearchPage = () => {
             >
 
             <View style={[styles.tarjetaChild, styles.image5IconLayout]} />
-            {producto.image_url ? (
-                <Image source={{ uri: producto.image_url }} style={[styles.image5Icon, styles.image5IconLayout]} contentFit="cover" />
+            {producto.imgIndex ? (
+                <Image source={prodImages[producto.imgIndex]} style={[styles.image5Icon, styles.image5IconLayout]} contentFit="cover" />
               ) : (
                 <></>
             )}

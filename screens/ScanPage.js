@@ -242,7 +242,7 @@ const ScanPage = () => {
             nutriscore : nr,
             restricciones : restr,
             apto : false,
-            nutrient_levels: {"Grasa":"Moderada", "Sal": "Moderada", "Grasa saturada": "Alta", "Azucar": "Alta"}, 
+            nutrient_levels: {"Grasas":"Moderada", "Sal": "Moderada", "Grasas saturadas": "Alta", "Azúcar": "Alta"}, 
             imgIndex: 'd'
           };
 
@@ -258,7 +258,7 @@ const ScanPage = () => {
           nutriscore : nr,
           restricciones : restr,
           apto : true,
-          nutrient_levels: {"Grasa":"Baja", "Sal": "Baja", "Grasa saturada": "Baja", "Azucar": "Alta"},
+          nutrient_levels: {"Grasas":"Baja", "Sal": "Baja", "Grasas saturadas": "Baja", "Azúcar": "Alta"},
           imgIndex: 'c'
         };
 
@@ -278,7 +278,7 @@ const ScanPage = () => {
           nutriscore : nr,
           restricciones : restr,
           apto : true,
-          nutrient_levels: {"Grasa":"Moderada", "Sal": "Moderada", "Grasa saturada": "Baja", "Azucar": "Alta"},
+          nutrient_levels: {"Grasas":"Moderada", "Sal": "Moderada", "Grasas saturadas": "Baja", "Azúcar": "Alta"},
           imgIndex: 'b'
         };
 
@@ -290,12 +290,12 @@ const ScanPage = () => {
       else if (data == 7790895009853){
 
         const dataParaApto = {
-          nombre : 'CEPITA MANZANA 1L',
+          nombre : 'Cepita Manzana 1L',
           imgUrl : '../assets/cepita.png',
           nutriscore : nr,
           restricciones : restr,
           apto : true,
-          nutrient_levels: {"Grasa":"Baja", "Sal": "Baja", "Grasa saturada": "Baja", "Azucar": "Alta"},
+          nutrient_levels: {"Grasas":"Baja", "Sal": "Baja", "Grasas saturadas": "Baja", "Azúcar": "Alta"},
           imgIndex: 'a'
         };
 
@@ -318,7 +318,7 @@ const ScanPage = () => {
             nutriscore : nr,
             restricciones : restr,
             apto : false,
-            nutrient_levels: {"Grasa":"Moderada", "Sal": "Moderada", "Grasa saturada": "Alta", "Azucar": "Alta"},
+            nutrient_levels: {"Grasas":"Moderada", "Sal": "Moderada", "Grasas saturadas": "Alta", "Azúcar": "Alta"},
             imgIndex: 'd'
           };
 
@@ -333,7 +333,7 @@ const ScanPage = () => {
             nutriscore : nr,
             restricciones : restr,
             apto : true,
-            nutrient_levels: {"Grasa":"Baja", "Sal": "Baja", "Grasa saturada": "Baja", "Azucar": "Alta"},
+            nutrient_levels: {"Grasas":"Baja", "Sal": "Baja", "Grasas saturadas": "Baja", "Azúcar": "Alta"},
             imgIndex: 'c'
           };
 
@@ -343,12 +343,12 @@ const ScanPage = () => {
         } else if (data == 7790895009853){
 
           const dataParaApto = {
-            nombre : 'CEPITA MANZANA 1L',
+            nombre : 'Cepita Manzana 1L',
             imgUrl : '../assets/cepita.png',
             nutriscore : nr,
             restricciones : restr,
             apto : true,
-            nutrient_levels: {"Grasa":"Baja", "Sal": "Baja", "Grasa saturada": "Baja", "Azucar": "Alta"},
+            nutrient_levels: {"Grasas":"Baja", "Sal": "Baja", "Grasas saturadas": "Baja", "Azúcar": "Alta"},
             imgIndex: 'a'
           };
   
@@ -363,7 +363,7 @@ const ScanPage = () => {
             nutriscore : nr,
             restricciones : restr,
             apto : true,
-            nutrient_levels: {"Grasa":"Moderada", "Sal": "Moderada", "Grasa saturada": "Baja", "Azucar": "Alta"},
+            nutrient_levels: {"Grasas":"Moderada", "Sal": "Moderada", "Grasas saturadas": "Baja", "Azúcar": "Alta"},
             imgIndex: 'b'
           };
   
@@ -386,7 +386,7 @@ const ScanPage = () => {
             nutriscore : nr,
             restricciones : ['Veganismo'],
             apto : true,
-            nutrient_levels: {"Grasa":"Baja", "Sal": "Baja", "Grasa saturada": "Baja", "Azucar": "Alta"},
+            nutrient_levels: {"Grasas":"Baja", "Sal": "Baja", "Grasas saturadas": "Baja", "Azúcar": "Alta"},
             imgIndex: 'c'
           };
 
@@ -404,7 +404,7 @@ const ScanPage = () => {
             nutriscore : nr,
             restricciones : restr,
             apto : true,
-            nutrient_levels: {"Grasa":"Moderada", "Sal": "Moderada", "Grasa saturada": "Baja", "Azucar": "Alta"},
+            nutrient_levels: {"Grasas":"Moderada", "Sal": "Moderada", "Grasas saturadas": "Baja", "Azúcar": "Alta"},
             imgIndex: 'b'
           };
 
@@ -416,12 +416,12 @@ const ScanPage = () => {
         else if (data == 7790895009853){
   
           const dataParaApto = {
-            nombre : 'CEPITA MANZANA 1L',
+            nombre : 'Cepita Manzana 1L',
             imgUrl : '../assets/cepita.png',
             nutriscore : nr,
             restricciones : restr,
             apto : true,
-            nutrient_levels: {"Grasa":"Baja", "Sal": "Baja", "Grasa saturada": "Baja", "Azucar": "Alta"},
+            nutrient_levels: {"Grasas":"Baja", "Sal": "Baja", "Grasas saturadas": "Baja", "Azúcar": "Alta"},
             imgIndex: 'a'
           };
 
