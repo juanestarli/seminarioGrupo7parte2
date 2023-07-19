@@ -60,7 +60,7 @@ function BottomTabsRoot({ navigation }) {
         return (
           <View
             style={{
-              width: 398,
+              width: 381,
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-evenly",

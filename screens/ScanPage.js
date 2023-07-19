@@ -77,8 +77,11 @@ const ScanPage = () => {
       const historialArray = JSON.parse(historialActual) || [];
   
       // Agrega el producto al historial
-      
+      const existeNombre = historialArray.some(objeto => objeto.nombre === p.nombre);
+
+      if (!existeNombre) {
         historialArray.push(p);
+      }
       
       
       
@@ -200,7 +203,7 @@ const ScanPage = () => {
       else if (data == 7790895648441){
 
         const dataParaApto = {
-          nombre : 'Cepita Manzana 1L',
+          nombre : 'Cepita Naranja 1L',
           imgUrl : '../assets/cepita.png',
           nutriscore : "e",
           restricciones : restr,
@@ -253,7 +256,7 @@ const ScanPage = () => {
         } else if (data == 7790895648441){
 
           const dataParaApto = {
-            nombre : 'Cepita Manzana 1L',
+            nombre : 'Cepita Naranja 1L',
             imgUrl : '../assets/cepita.png',
             nutriscore : "e",
             restricciones : restr,
@@ -300,7 +303,7 @@ const ScanPage = () => {
             imgIndex: 'c'
           };
 
-          //handleHistorial(dataParaApto);
+          handleHistorial(dataParaApto);
   
           navigation.navigate("ProductDataPageNOAPTO", {dataParaApto});
   
@@ -326,7 +329,7 @@ const ScanPage = () => {
         else if (data == 7790895648441){
   
           const dataParaApto = {
-            nombre : 'Cepita Manzana 1L',
+            nombre : 'Cepita Naranja 1L',
             imgUrl : '../assets/cepita.png',
             nutriscore : "e",
             restricciones : restr,
@@ -421,7 +424,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     left: -10,
-    top: -75,
+    top: -26,
     width: 80,
     height: 80,
     position: "absolute"
@@ -431,8 +434,8 @@ const styles = StyleSheet.create({
     width: "85%",
   },
   tituloCamara: {
-    top: -55,
-    left: 10,
+    top: -35,
+    left: 5,
     fontSize: FontSize.size_lg,
     fontFamily: FontFamily.workSansBold,
     justifyContent: "center",

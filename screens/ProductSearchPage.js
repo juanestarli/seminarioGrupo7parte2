@@ -45,8 +45,11 @@ const ProductSearchPage = () => {
       const historialArray = JSON.parse(historialActual) || [];
   
       // Agrega el producto al historial
-      historialArray.push(p);
+      const existeNombre = historialArray.some(objeto => objeto.nombre === p.nombre);
 
+      if (!existeNombre) {
+        historialArray.push(p);
+      }
       console.log(historialArray)
   
       // Actualiza el historial en AsyncStorage
