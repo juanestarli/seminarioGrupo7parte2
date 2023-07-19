@@ -42,7 +42,7 @@ const HomePage = () => {
       <Image
         style={styles.homePageChild}
         contentFit="cover"
-        source={require("../assets/group-7.png")}
+        source={require("../assets/loguito2.png")}
       />
     </View>
   );

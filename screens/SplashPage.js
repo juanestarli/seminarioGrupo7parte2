@@ -39,7 +39,7 @@ const SplashPage = () => {
       <Image
         style={styles.splashPageChild}
         contentFit="cover"
-        source={require("../assets/group-7.png")}
+        source={require("../assets/loguito2.png")}
       />
       <Pressable
         style={styles.iconSpinnerAlt}
