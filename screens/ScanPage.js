@@ -290,11 +290,7 @@ const ScanPage = () => {
       else if (data == 7790895648441){
 
         const dataParaApto = {
-<<<<<<< Updated upstream
           nombre : 'Cepita Manzana 1L',
-=======
-          nombre : 'CEPITA NARANJA 1L',
->>>>>>> Stashed changes
           imgUrl : '../assets/cepita.png',
           nutriscore : "e",
           restricciones : restr,
@@ -347,11 +343,7 @@ const ScanPage = () => {
         } else if (data == 7790895648441){
 
           const dataParaApto = {
-<<<<<<< Updated upstream
             nombre : 'Cepita Manzana 1L',
-=======
-            nombre : 'CEPITA NARANJA 1L',
->>>>>>> Stashed changes
             imgUrl : '../assets/cepita.png',
             nutriscore : "e",
             restricciones : restr,
@@ -424,11 +416,7 @@ const ScanPage = () => {
         else if (data == 7790895648441){
   
           const dataParaApto = {
-<<<<<<< Updated upstream
             nombre : 'Cepita Manzana 1L',
-=======
-            nombre : 'CEPITA NARANJA 1L',
->>>>>>> Stashed changes
             imgUrl : '../assets/cepita.png',
             nutriscore : "e",
             restricciones : restr,
