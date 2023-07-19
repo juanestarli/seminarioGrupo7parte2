@@ -77,7 +77,11 @@ const ScanPage = () => {
       const historialArray = JSON.parse(historialActual) || [];
   
       // Agrega el producto al historial
-      historialArray.push(p);
+      
+        historialArray.push(p);
+      
+      
+      
 
       console.log(historialArray)
   
@@ -131,116 +135,6 @@ const ScanPage = () => {
       
     
 
-      
-      //await AsyncStorage.setItem('nombreProducto', productName);
-      //const nombreProducto= await AsyncStorage.getItem('nombreProducto');
-      //await AsyncStorage.setItem('nombreProducto', productName);
-      //const nombreProducto= await AsyncStorage.getItem('nombreProducto');
-
-
-      
-
-
-      //setApto(verificarIngredientes(ingredients));
-      
-      
-
-      
-      function quitarPrefijo(palabra) {
-        if (palabra.length <= 3) {
-          return palabra;
-        }
-        
-        return palabra.substring(3);
-
-      function quitarPrefijo(palabra) {
-        console.log(String(palabra));
-        return String(palabra).substring(3);
-      }
-      }
-
-      function verificarIngredientes(listaIngredients) {
-        let Apto=true;
-        const noAptoParaVeganos = [
-          'carmín/cochinilla (E120)',
-          'carmine/cochineal (E120)',
-          'caseína',
-          'casein',
-          'lactosa',
-          'lactose',
-          'suero de leche',
-          'whey',
-          'colágeno',
-          'collagen',
-          'elastina',
-          'elastin',
-          'queratina',
-          'keratin',
-          'gelatina',
-          'gelatin',
-          'gelatina áspic',
-          'aspic gelatin',
-          'lardo/sebo',
-          'lard/tallow',
-          'shellac/goma laca',
-          'shellac',
-          'cera de abeja (E901)',
-          'beeswax (E901)',
-          'propóleo',
-          'propolis',
-          'jalea real',
-          'royal jelly',
-          'vitamina D3',
-          'vitamin D3',
-          'lanolina (E913)',
-          'lanolin (E913)',
-          'albúmina/clara de huevo',
-          'egg albumin/egg white',
-          'cola de pescado',
-          'fish glue',
-          'aceite de hígado de bacalao',
-          'cod liver oil',
-          'pepsina',
-          'pepsin',
-          'leche',
-          'milk',
-          'huevo',
-          'egg',
-          'pollo',
-          'chicken',
-          'carne',
-          'meat',
-          'pescado',
-          'fish',
-          'queso',
-          'cheese'
-        ];
-
-      }
-        
-        // VEGANISMO
-        /*
-        if (restricciones.includes("Veganismo")){
-          listaIngredients.forEach(ingredient => {
-            if (noAptoParaVeganos.includes(quitarPrefijo(ingredient)))  {
-              Apto=false;
-            }
-          });
-          }
-        return Apto;
-      }*/
-      
-
-      // VEGETARIANISMO
-      // CELIAQUISMO
-      // DIABETES
-      // DIETA BAJA EN COLESTEROL
-      // HIPERTENSION
-      // INTOLERANCIA A LA LACTOSA
-
-      
-
-
 
       // Armo un JSON y lo mando a APTO
       const dataParaApto = {
@@ -251,7 +145,8 @@ const ScanPage = () => {
         apto : apto,
         nutrient_levels: nutrient_levels
       };
-      if (restr.length === 0){
+      //CUANDO NO HAY RESTRICCIONES NI INGREDIENTES
+      if (restr.length === 0 && ingred.length===0){
         if (data == 7622201808884){
 
           const dataParaApto = {
@@ -285,9 +180,6 @@ const ScanPage = () => {
         navigation.navigate("Nutriscore", {dataParaApto});
 
       }
-
-      
-
       else if (data == 7790045825791){
 
         const dataParaApto = {
@@ -325,9 +217,9 @@ const ScanPage = () => {
       else {
         navigation.navigate("ProductDataPageNOSEENCUEN");
       }
-
+    //CUANDO HAY RESTRICCION Y NO INGREDIENTES
     }
-      else if (restr.includes("Intolerancia a la Lactosa") && !restr.includes("Veganismo")){
+      else if (restr.includes("Intolerancia a la Lactosa") && ingred.length===0){
         if (data == 7622201808884){
 
           const dataParaApto = {
@@ -394,21 +286,21 @@ const ScanPage = () => {
         else {
           navigation.navigate("ProductDataPageNOSEENCUEN");
         }
-
-      } else if (restr.includes("Intolerancia a la Lactosa") && restr.includes("Veganismo")){
+        //CUANDO HAY INGREDIENTES Y RESTRICCIONES
+      } else if (restr.includes("Intolerancia a la Lactosa") && ingred.length!==0){
         if (data == 7790580169312){
   
           const dataParaApto = {
             nombre : 'Mogul Cerebritos',
             imgUrl : imagenUrl,
             nutriscore : nr,
-            restricciones : ['Veganismo','Aceite de Coco'],
+            restricciones : ['Aceite de Coco'],
             apto : true,
             nutrient_levels: {"Grasas":"Baja", "Sal": "Baja", "Grasas saturadas": "Baja", "Azúcar": "Alta"},
             imgIndex: 'c'
           };
 
-          handleHistorial(dataParaApto);
+          //handleHistorial(dataParaApto);
   
           navigation.navigate("ProductDataPageNOAPTO", {dataParaApto});
   
@@ -458,12 +350,6 @@ const ScanPage = () => {
 
       // Lo agrego al historial
 
-      const prodHistorialOk = {
-        nombre : productName,
-        imgUrl : imagenUrl,
-        nutriscore : nr,
-        nutrient_levels: nutrient_levels
-      };
 
       //handleHistorial(dataParaApto);
 
