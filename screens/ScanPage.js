@@ -36,6 +36,7 @@ const ScanPage = () => {
 
   const [restricciones, setRestricciones] = useState('');
   const [apto, setApto] = useState(true);
+  const [ingredientes, setIngredientes] = useState('');
 
   useEffect(() => {
     // Ejemplo de cómo recuperar un objeto JSON de AsyncStorage
@@ -47,6 +48,22 @@ const ScanPage = () => {
         console.log('Restricciones recuperadas:', data);
       } catch (error) {
         console.log('Error al recuperar las restricciones:', error);
+      }
+    };
+
+    getData();
+  }, []);
+
+  useEffect(() => {
+    // Ejemplo de cómo recuperar un objeto JSON de AsyncStorage
+    const getData = async () => {
+      try {
+        const jsonString = await AsyncStorage.getItem('ingredientes');
+        const data = JSON.parse(jsonString);
+        setIngredientes(data);
+        console.log('Ingredientes recuperados:', data);
+      } catch (error) {
+        console.log('Error al recuperar los ingredientes:', error);
       }
     };
 
@@ -102,6 +119,7 @@ const ScanPage = () => {
       const imagenUrl = json.product.image_url;
       const nr = json.product.nutriscore_grade;
       const restr = restricciones;
+      const ingred = ingredientes;
       const ingredients = json.ingredients_tags;
       const nutrient_levels = json.product.nutrient_levels;
       console.log(nutrient_levels);
@@ -384,7 +402,7 @@ const ScanPage = () => {
             nombre : 'Mogul Cerebritos',
             imgUrl : imagenUrl,
             nutriscore : nr,
-            restricciones : ['Veganismo'],
+            restricciones : ['Veganismo','Aceite de Coco'],
             apto : true,
             nutrient_levels: {"Grasas":"Baja", "Sal": "Baja", "Grasas saturadas": "Baja", "Azúcar": "Alta"},
             imgIndex: 'c'
