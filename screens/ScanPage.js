@@ -384,7 +384,7 @@ const ScanPage = () => {
             nombre : 'Mogul Cerebritos',
             imgUrl : imagenUrl,
             nutriscore : nr,
-            restricciones : ['Veganismo'],
+            restricciones : ['Veganismo','Aceite de Coco'],
             apto : true,
             nutrient_levels: {"Grasas":"Baja", "Sal": "Baja", "Grasas saturadas": "Baja", "Azúcar": "Alta"},
             imgIndex: 'c'
